@@ -21,7 +21,7 @@ dependencies {
     // Pelican compiles against Pekko and ships none of it, so a service names
     // the version and the Scala cross-build it runs. Either cross-build works;
     // this repository builds and tests at `_2.13`.
-    implementation(platform("org.apache.pekko:pekko-bom_2.13:1.7.1"))
+    implementation(platform("org.apache.pekko:pekko-bom_2.13:2.0.0"))
     implementation("org.apache.pekko:pekko-actor-typed_2.13")
     implementation("org.apache.pekko:pekko-stream_2.13")
     implementation("org.apache.pekko:pekko-http_2.13:1.4.2")
