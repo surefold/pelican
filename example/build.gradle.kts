@@ -101,7 +101,7 @@ dependencies {
     // swagger-parser sits in front of the emitted document above. Only the
     // runtime is here — there is no serializer and no compiler plugin, because
     // `parseToJsonElement` needs neither.
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
 
     // The in-memory metric reader `TracedOrdersTest` collects the histogram
     // through. The in-memory *span* exporter lives in the same artifact, but
