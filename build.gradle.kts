@@ -263,7 +263,7 @@ subprojects {
         resolutionStrategy.force(
             "org.bouncycastle:bcprov-jdk18on:1.86",
             "org.bouncycastle:bcpg-jdk18on:1.86",
-            "org.bouncycastle:bcpkix-jdk18on:1.86",
+            "org.bouncycastle:bcpkix-jdk18on:1.87",
             "org.bouncycastle:bcutil-jdk18on:1.86",
         )
     }
