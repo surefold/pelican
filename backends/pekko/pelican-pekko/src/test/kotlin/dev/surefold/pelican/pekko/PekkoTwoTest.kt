@@ -1,5 +1,6 @@
 package dev.surefold.pelican.pekko
 
+import com.typesafe.config.ConfigFactory
 import io.kotest.matchers.shouldBe
 import org.apache.pekko.http.javadsl.model.HttpMethods
 import org.apache.pekko.http.javadsl.model.HttpRequest
@@ -26,6 +27,18 @@ class PekkoTwoTest {
         val request = HttpRequest.create().withUri("/notes").addHeader(Host.create("shop.example", 8080))
 
         PekkoView(request).header("Host") shouldBe "shop.example:8080"
+    }
+
+    @Test
+    fun `HTTP-2 is off where only Pekko's defaults speak, as Pekko 1 had it`() {
+        serverConfig(ConfigFactory.defaultReference()).getBoolean(ENABLE_HTTP2) shouldBe false
+    }
+
+    @Test
+    fun `HTTP-2 is on where the service turned it on`() {
+        val chosen = ConfigFactory.parseString("$ENABLE_HTTP2 = on").withFallback(ConfigFactory.defaultReference())
+
+        serverConfig(chosen).getBoolean(ENABLE_HTTP2) shouldBe true
     }
 
     @Test
