@@ -31,6 +31,8 @@ one.
 
 ## Unreleased
 
+## [2.1.0] — 2026-11-23
+
 ### Changed — breaking, for `pelican-streams` and `pelican-streams-jetty`
 
 - **The streaming modules build against `dev.surefold:surefold-stream*`
