@@ -66,6 +66,7 @@ import dev.surefold.pelican.pekko.handledNow as handledOnPekko
 @Fork(value = 3, jvmArgsAppend = ["-Xms512m", "-Xmx512m"])
 @Warmup(iterations = 5, time = 1)
 @Measurement(iterations = 5, time = 1)
+@Suppress("ForbiddenVoid") // `Behaviors.empty<Void>()` is Pekko's Java DSL; see config/detekt/detekt.yml.
 open class RoutingScaleBenchmark {
 
     /** One, a small service, and one large enough that a scan would show. */
