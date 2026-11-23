@@ -491,12 +491,22 @@ internal class PekkoView(val request: HttpRequest) : RequestView {
     override val rawQuery: String? get() = request.uri.rawQueryString().orElse(null)
 
     override fun header(name: String): String? = request.getHeader(name).orElse(null)?.value()
+        ?: if (name.equals(HOST, ignoreCase = true)) authority() else null
+
+    /**
+     * HTTP/2 sends no `Host`; its `:authority` is where Pekko puts it, in the request's URI. Read as written there,
+     * since Pekko's `port()` fills in the scheme's default.
+     */
+    private fun authority(): String? =
+        java.net.URI(request.uri.toString()).rawAuthority?.substringAfterLast('@')?.ifEmpty { null }
 
     override fun headers(name: String): List<String> =
         request.getHeaders().filter { it.name().equals(name, ignoreCase = true) }.map { it.value() }
 }
 
 private const val ACCEPT = "Accept"
+
+private const val HOST = "Host"
 
 /** What the handler asked for, on whatever response came back. */
 private fun HttpResponse.withHeaders(params: Params): HttpResponse {

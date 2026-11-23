@@ -198,7 +198,7 @@ class DoesNotCompileTest {
 
         withClue(errors.joinToString("\n")) {
             errors.joinToString("\n") shouldContain
-                "Return type mismatch: expected 'Source<Tick, NotUsed>', actual 'Source<String!, NotUsed!>!'."
+                "Return type mismatch: expected 'Source<Tick, NotUsed>', actual 'Source<String, NotUsed>'."
         }
     }
 

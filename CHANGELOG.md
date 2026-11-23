@@ -31,6 +31,17 @@ one.
 
 ## Unreleased
 
+### Fixed
+
+- **`pelican-pekko` on Pekko HTTP 2.0.** A request that came over HTTP/2 has no
+  `Host` header (its host is the `:authority`, which Pekko puts in the URI), so
+  a cookie POST from the API's own site was refused as cross-site, and a
+  tenant read from `Host` was missing. `Host` now falls back to that authority.
+  Pekko HTTP 2.0 also has its own `QUERY`, which its parser gives and which is
+  not equal to Pelican's custom one, so every `QUERY` route answered 405;
+  `PEKKO_QUERY` is now Pekko's own wherever Pekko has one. Pekko 1.x behaves
+  as before. The example and benchmarks build against Pekko 2.0.0.
+
 ## [2.1.0] — 2026-11-23
 
 ### Changed — breaking, for `pelican-streams` and `pelican-streams-jetty`
