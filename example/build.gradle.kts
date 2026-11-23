@@ -128,7 +128,7 @@ dependencies {
     // Matchers, declared here rather than arriving through pelican-test. The
     // library ships assertions that throw AssertionError; which matcher
     // library a suite uses on top is the suite's own choice.
-    testImplementation("io.kotest:kotest-assertions-core:6.2.6")
+    testImplementation("io.kotest:kotest-assertions-core:6.2.7")
 
     // Generators, for the one suite that asks a question about *every* string
     // rather than about the seven a person thought of. Test scope, and only
