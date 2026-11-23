@@ -134,7 +134,7 @@ dependencies {
     // rather than about the seven a person thought of. Test scope, and only
     // here: what it generates are request lines, and this is where the backends
     // run behind one seam to be asked the same one.
-    testImplementation("io.kotest:kotest-property:6.2.6")
+    testImplementation("io.kotest:kotest-property:6.2.7")
 }
 
 /**
