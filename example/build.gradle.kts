@@ -68,7 +68,7 @@ dependencies {
     // is not the one that wrote them — swagger-parser reads the document back
     // and reports what is wrong with it. A generator marking its own homework
     // is worth very little; see OpenApiSpecQualityTest.
-    testImplementation("io.swagger.parser.v3:swagger-parser:2.1.48")
+    testImplementation("io.swagger.parser.v3:swagger-parser:2.1.49")
     // swagger-parser's v2 converter resolves Guava 32.1.3, which has a high-severity advisory (unbounded
     // allocation on deserialising its compact collections). 33.7.2 is the first fixed; 2.1.48 is the latest parser.
     constraints {
