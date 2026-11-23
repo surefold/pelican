@@ -42,6 +42,13 @@ one.
   the Lark rename in 1.1.0, this ships before a major release because these two
   modules have no users to break.
 
+### Changed
+
+- **`openApi()` counts a document's `$ref`s once for its tagged-failure check**
+  (spec 0108), not once per tagged component. A service with many operations
+  and many tagged failures builds its document in a fraction of the time it
+  took; the document, and what is refused, are as they were.
+
 ## [2.0.0] — 2026-11-02
 
 ### Changed — breaking
