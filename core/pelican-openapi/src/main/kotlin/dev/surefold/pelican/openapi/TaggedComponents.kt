@@ -74,17 +74,15 @@ private fun withTag(name: String, schema: JsonObj, tag: String, field: String, d
 
 /** How many `$ref`s in [values] point at each target. A discriminator's mapping names one too, but as a value. */
 private fun refCounts(values: List<JsonValue>): Map<String, Int> =
-    HashMap<String, Int>().also { counts -> values.forEach { countRefs(it, counts) } }
+    values.asSequence().flatMap(::refsIn).groupingBy { it }.eachCount()
 
-private fun countRefs(value: JsonValue, counts: MutableMap<String, Int>) {
-    when (value) {
-        is JsonObj -> value.fields.forEach { (key, v) ->
-            val ref = (v as? JsonStr)?.value
-            if (key == "\$ref" && ref != null) counts.merge(ref, 1, Int::plus) else countRefs(v, counts)
-        }
-
-        is JsonArr -> value.items.forEach { countRefs(it, counts) }
-
-        else -> Unit
+private fun refsIn(value: JsonValue): Sequence<String> = when (value) {
+    is JsonObj -> value.fields.asSequence().flatMap { (key, v) ->
+        val ref = (v as? JsonStr)?.value
+        if (key == "\$ref" && ref != null) sequenceOf(ref) else refsIn(v)
     }
+
+    is JsonArr -> value.items.asSequence().flatMap(::refsIn)
+
+    else -> emptySequence()
 }
