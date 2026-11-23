@@ -26,7 +26,7 @@ dependencies {
 }
 ```
 
-`pelicanVersion` is the release you pin, `val pelicanVersion = "2.0.0"`.
+`pelicanVersion` is the release you pin, `val pelicanVersion = "2.1.0"`.
 The admission recipe below needs 2.0.0 or later. To
 serve on Pekko HTTP instead, use `pelican-pekko`, `pelican-pekko-docs` and
 `pelican-test-pekko`, plus the Pekko dependencies your service names itself,
@@ -1015,15 +1015,15 @@ of `_2.13` on every Pekko line.
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("dev.surefold:pelican-pekko:2.0.0")       // brings pelican-core; compiles against Pekko
-    implementation("dev.surefold:pelican-jackson:2.0.0")
-    implementation("dev.surefold:pelican-pekko-docs:2.0.0")  // startWithDocs and Swagger UI
+    implementation("dev.surefold:pelican-pekko:2.1.0")       // brings pelican-core; compiles against Pekko
+    implementation("dev.surefold:pelican-jackson:2.1.0")
+    implementation("dev.surefold:pelican-pekko-docs:2.1.0")  // startWithDocs and Swagger UI
     implementation(platform("org.apache.pekko:pekko-bom_2.13:1.7.1"))
     implementation("org.apache.pekko:pekko-actor-typed_2.13")
     implementation("org.apache.pekko:pekko-stream_2.13")
     implementation("org.apache.pekko:pekko-http_2.13:1.4.1")
-    testImplementation("dev.surefold:pelican-test:2.0.0")
-    testImplementation("dev.surefold:pelican-test-pekko:2.0.0") // inMemory() on Pekko
+    testImplementation("dev.surefold:pelican-test:2.1.0")
+    testImplementation("dev.surefold:pelican-test-pekko:2.1.0") // inMemory() on Pekko
 }
 ```
 
