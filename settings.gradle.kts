@@ -3,6 +3,14 @@
 // `example` applies it by id, which is the same path a consumer takes.
 pluginManagement {
     includeBuild("tooling/pelican-gradle-plugin")
+    repositories {
+        // Google's mirror of Central first: Central answers GitHub's shared runners 429 often enough to fail CI.
+        maven("https://maven-central.storage-download.googleapis.com/maven2/") {
+            name = "centralMirror"
+            mavenContent { releasesOnly() }
+        }
+        gradlePluginPortal()
+    }
 }
 
 // Where a Java toolchain comes from when the machine does not already have it.
@@ -20,6 +28,11 @@ rootProject.name = "pelican"
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // Google's mirror of Central first: Central answers GitHub's shared runners 429 often enough to fail CI.
+        maven("https://maven-central.storage-download.googleapis.com/maven2/") {
+            name = "centralMirror"
+            mavenContent { releasesOnly() }
+        }
         mavenCentral()
         maven("https://central.sonatype.com/repository/maven-snapshots/") {
             name = "centralSnapshots"

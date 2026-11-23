@@ -3,6 +3,17 @@
 // root build includes it (see settings.gradle.kts there), which is what lets
 // `example` apply `dev.surefold.pelican` by id and exercise the real consumer path.
 
+pluginManagement {
+    repositories {
+        // Google's mirror of Central first: Central answers GitHub's shared runners 429 often enough to fail CI.
+        maven("https://maven-central.storage-download.googleapis.com/maven2/") {
+            name = "centralMirror"
+            mavenContent { releasesOnly() }
+        }
+        gradlePluginPortal()
+    }
+}
+
 // This build provisions its own toolchain, so it declares its own resolver;
 // settings of an included build do not inherit the including build's.
 plugins {
@@ -12,5 +23,12 @@ plugins {
 rootProject.name = "pelican-gradle-plugin"
 
 dependencyResolutionManagement {
-    repositories { mavenCentral() }
+    repositories {
+        // Google's mirror of Central first: Central answers GitHub's shared runners 429 often enough to fail CI.
+        maven("https://maven-central.storage-download.googleapis.com/maven2/") {
+            name = "centralMirror"
+            mavenContent { releasesOnly() }
+        }
+        mavenCentral()
+    }
 }
