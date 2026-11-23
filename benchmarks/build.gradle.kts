@@ -42,7 +42,7 @@ dependencies {
 
     // `:benchmarks:wire`'s percentiles, and the client it drives both servers with: the release `pelican-jetty` serves.
     implementation("org.hdrhistogram:HdrHistogram:2.2.2")
-    implementation("org.eclipse.jetty:jetty-client:12.1.14")
+    implementation("org.eclipse.jetty:jetty-client:12.1.15")
 }
 
 /**

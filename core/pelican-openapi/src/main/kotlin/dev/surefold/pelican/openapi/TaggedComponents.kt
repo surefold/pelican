@@ -32,6 +32,7 @@ internal fun declareTags(
         val ref = (schemas.schema(type, components)["\$ref"] as? JsonStr)?.value ?: return@mapNotNull null
         ref.removePrefix(COMPONENT_PREFIX) to err
     }
+    val refs = refCounts(rendered)
     tagged.groupBy({ it.first }, { it.second }).forEach { (name, failuresOfIt) ->
         val uses = failuresOfIt.map { it.tag to it.discriminator }
         val tags = uses.distinct()
@@ -40,8 +41,7 @@ internal fun declareTags(
                 "Its schema is one component, and a tag is written into it, so it can only carry one. " +
                 "Declare a second type for the second failure."
         }
-        val refs = rendered.sumOf { refsTo("$COMPONENT_PREFIX$name", it) }
-        require(refs == uses.size) {
+        require((refs["$COMPONENT_PREFIX$name"] ?: 0) == uses.size) {
             "$name is tagged `${tags.single().first}` as a failure, and also used where it is not tagged. " +
                 "Its schema is one component, and a tag is written into it, so the untagged use would be " +
                 "documented as carrying a tag it never sends. Declare a second type for one of them."
@@ -72,13 +72,17 @@ private fun withTag(name: String, schema: JsonObj, tag: String, field: String, d
     }
 }
 
-/** How many `$ref`s in [value] point at [ref]. A discriminator's mapping names it too, but as a value. */
-private fun refsTo(ref: String, value: JsonValue): Int = when (value) {
-    is JsonObj -> value.fields.entries.sumOf { (key, v) ->
-        if (key == "\$ref" && (v as? JsonStr)?.value == ref) 1 else refsTo(ref, v)
+/** How many `$ref`s in [values] point at each target. A discriminator's mapping names one too, but as a value. */
+private fun refCounts(values: List<JsonValue>): Map<String, Int> =
+    values.asSequence().flatMap(::refsIn).groupingBy { it }.eachCount()
+
+private fun refsIn(value: JsonValue): Sequence<String> = when (value) {
+    is JsonObj -> value.fields.asSequence().flatMap { (key, v) ->
+        val ref = (v as? JsonStr)?.value
+        if (key == "\$ref" && ref != null) sequenceOf(ref) else refsIn(v)
     }
 
-    is JsonArr -> value.items.sumOf { refsTo(ref, it) }
+    is JsonArr -> value.items.asSequence().flatMap(::refsIn)
 
-    else -> 0
+    else -> emptySequence()
 }

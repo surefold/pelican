@@ -177,6 +177,26 @@ class TaggedFailuresDocumentTest {
     }
 
     @Test
+    fun `tagged failures shared by many operations are each counted once per use`() {
+        val adoptions = (1..300).map { n ->
+            endpoint(petId) {
+                post("pets" / petId / "adoption-$n")
+                json<Pet>().orFail(notRecorded, registryDown)
+            }
+        }
+        val doc = apiSpec(adoptions, Schemas).openApi()
+
+        (doc / "paths").keys().size shouldBe 300
+        (doc / "components" / "schemas" / "NotRecorded" / "properties" / "kind" / "const").str() shouldBe "not_recorded"
+        val lookUp = endpoint(petId) {
+            get("pets" / petId / "adoption")
+            json<RegistryDown>()
+        }
+        shouldThrow<IllegalArgumentException> { apiSpec(adoptions + lookUp, Schemas).openApi() }
+            .message shouldContain "RegistryDown is tagged `registry_down` as a failure, and also used where it is not"
+    }
+
+    @Test
     fun `a payload with a field of the tag's name is refused rather than overwritten`() {
         val withKind = object : SchemaSource {
             override fun schema(type: KType, components: SchemaComponents): JsonObj {

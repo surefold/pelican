@@ -3,7 +3,7 @@ plugins {
     `java-gradle-plugin`
     // The same two the library modules are held to, with the same
     // configuration — a build of its own should not mean standards of its own.
-    id("com.diffplug.spotless") version "8.10.4"
+    id("com.diffplug.spotless") version "8.11.0"
     id("dev.detekt") version "2.0.0-alpha.6"
     // The Plugin Portal is where `plugins { id(...) }` resolves from without a
     // `pluginManagement` block, so the plugin goes to both it and Central.
@@ -60,7 +60,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
-    testImplementation("io.kotest:kotest-assertions-core:6.2.6")
+    testImplementation("io.kotest:kotest-assertions-core:6.2.7")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -71,9 +71,9 @@ dependencies {
 // manifest names the coordinate, and 1.86 is the newest release there is.
 configurations.matching { it.name == "kotlinBouncyCastleConfiguration" }.configureEach {
     resolutionStrategy.force(
-        "org.bouncycastle:bcprov-jdk18on:1.86",
-        "org.bouncycastle:bcpg-jdk18on:1.86",
-        "org.bouncycastle:bcpkix-jdk18on:1.86",
+        "org.bouncycastle:bcprov-jdk18on:1.87",
+        "org.bouncycastle:bcpg-jdk18on:1.87",
+        "org.bouncycastle:bcpkix-jdk18on:1.87",
         "org.bouncycastle:bcutil-jdk18on:1.86",
     )
 }
@@ -107,17 +107,6 @@ gradlePlugin {
             displayName = "Pelican"
             description = "Generates a Kotlin client and an OpenAPI document from endpoint descriptions, " +
                 "and endpoint descriptions from a document."
-            tags.set(listOf("openapi", "kotlin", "codegen", "pelican"))
-        }
-        // The ID Pelican had up to 1.2.0, published once more at 2.0.0 so a build that still applies it gets this
-        // plugin, and the Portal's page for it says where it went (spec 0107). The Portal cannot relocate an ID.
-        // Remove after 2.0.0: the marker stays on Central and the Portal.
-        create("pelicanOldId") {
-            id = "io.github.matthewjones372.pelican"
-            implementationClass = "dev.surefold.pelican.gradle.PelicanPlugin"
-            displayName = "Pelican (moved to dev.surefold.pelican)"
-            description = "Pelican's Gradle plugin is now dev.surefold.pelican, with group dev.surefold. This ID " +
-                "applies the same plugin at 2.0.0 and is not published again."
             tags.set(listOf("openapi", "kotlin", "codegen", "pelican"))
         }
     }

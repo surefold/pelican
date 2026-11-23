@@ -58,17 +58,17 @@ dependencies {
     // Live and ready probes: `example.health` is what they look like.
     implementation(project(":pelican-health"))
     implementation("io.opentelemetry:opentelemetry-sdk:1.68.0")
-    runtimeOnly("ch.qos.logback:logback-classic:1.6.6")
+    runtimeOnly("ch.qos.logback:logback-classic:1.6.8")
     // `example.logging` claims a level per status and a template rather than a
     // path; RequestLogTest reads the lines back through logback's own appender
     // rather than trusting the source, which needs it at compile scope there.
-    testImplementation("ch.qos.logback:logback-classic:1.6.6")
+    testImplementation("ch.qos.logback:logback-classic:1.6.8")
 
     // The OpenAPI documents this repository emits are checked by a parser that
     // is not the one that wrote them — swagger-parser reads the document back
     // and reports what is wrong with it. A generator marking its own homework
     // is worth very little; see OpenApiSpecQualityTest.
-    testImplementation("io.swagger.parser.v3:swagger-parser:2.1.48")
+    testImplementation("io.swagger.parser.v3:swagger-parser:2.1.49")
     // swagger-parser's v2 converter resolves Guava 32.1.3, which has a high-severity advisory (unbounded
     // allocation on deserialising its compact collections). 33.7.2 is the first fixed; 2.1.48 is the latest parser.
     constraints {
@@ -101,7 +101,7 @@ dependencies {
     // swagger-parser sits in front of the emitted document above. Only the
     // runtime is here — there is no serializer and no compiler plugin, because
     // `parseToJsonElement` needs neither.
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.13.0")
 
     // The in-memory metric reader `TracedOrdersTest` collects the histogram
     // through. The in-memory *span* exporter lives in the same artifact, but
@@ -128,13 +128,13 @@ dependencies {
     // Matchers, declared here rather than arriving through pelican-test. The
     // library ships assertions that throw AssertionError; which matcher
     // library a suite uses on top is the suite's own choice.
-    testImplementation("io.kotest:kotest-assertions-core:6.2.6")
+    testImplementation("io.kotest:kotest-assertions-core:6.2.7")
 
     // Generators, for the one suite that asks a question about *every* string
     // rather than about the seven a person thought of. Test scope, and only
     // here: what it generates are request lines, and this is where the backends
     // run behind one seam to be asked the same one.
-    testImplementation("io.kotest:kotest-property:6.2.6")
+    testImplementation("io.kotest:kotest-property:6.2.7")
 }
 
 /**

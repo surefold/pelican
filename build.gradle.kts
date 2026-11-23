@@ -15,7 +15,7 @@ buildscript {
 plugins {
     kotlin("jvm") version "2.4.21" apply false
     kotlin("plugin.serialization") version "2.4.21" apply false
-    id("com.diffplug.spotless") version "8.10.4"
+    id("com.diffplug.spotless") version "8.11.0"
     id("dev.detekt") version "2.0.0-alpha.6" apply false
     id("org.jetbrains.kotlinx.kover") version "0.9.11"
     // The version comes from the nearest `v` tag rather than a property, so
@@ -248,7 +248,7 @@ subprojects {
         // Assertions only. The tests still run on the JUnit platform — kotest
         // is here for its matchers and for the failure messages they produce,
         // not as a second test framework.
-        "testImplementation"("io.kotest:kotest-assertions-core:6.2.6")
+        "testImplementation"("io.kotest:kotest-assertions-core:6.2.7")
         "testRuntimeOnly"("org.junit.platform:junit-platform-launcher")
     }
 
@@ -261,9 +261,9 @@ subprojects {
     // name-constraints bypass. 1.86 is what the plugin classpath already picks.
     configurations.matching { it.name == "kotlinBouncyCastleConfiguration" }.configureEach {
         resolutionStrategy.force(
-            "org.bouncycastle:bcprov-jdk18on:1.86",
-            "org.bouncycastle:bcpg-jdk18on:1.86",
-            "org.bouncycastle:bcpkix-jdk18on:1.86",
+            "org.bouncycastle:bcprov-jdk18on:1.87",
+            "org.bouncycastle:bcpg-jdk18on:1.87",
+            "org.bouncycastle:bcpkix-jdk18on:1.87",
             "org.bouncycastle:bcutil-jdk18on:1.86",
         )
     }
