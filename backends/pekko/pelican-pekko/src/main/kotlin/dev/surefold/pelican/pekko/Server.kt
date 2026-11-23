@@ -1,5 +1,7 @@
 package dev.surefold.pelican.pekko
 
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import dev.surefold.pelican.Api
 import org.apache.pekko.actor.typed.ActorSystem
 import org.apache.pekko.actor.typed.javadsl.Behaviors
@@ -168,12 +170,25 @@ private fun Api.bind(
     require(admission == null) { "This interpreter does not support operation admission." }
     val binding = Http.get(system)
         .newServerAt(host, port)
-        .withSettings(withQuery(ServerSettings.create(system.classicSystem())))
+        .withSettings(withQuery(ServerSettings.create(serverConfig(system.settings().config()))))
         .bind(route(system).sealedWith(this))
         .toCompletableFuture()
         .join()
     return PelicanServer(this, system, binding, host, ownsSystem)
 }
+
+/**
+ * HTTP/2 stays off unless the service's own config turns it on. Pekko HTTP 2.0 changed the default to on, and its
+ * h2c upgrade of a request with a body can drop the connection mid-response; Pekko 1.x had it off.
+ */
+internal fun serverConfig(config: Config): Config {
+    val chosen = config.hasPath(ENABLE_HTTP2) && config.getValue(ENABLE_HTTP2).origin().resource() != REFERENCE
+    return if (chosen) config else ConfigFactory.parseString("$ENABLE_HTTP2 = off").withFallback(config)
+}
+
+internal const val ENABLE_HTTP2 = "pekko.http.server.enable-http2"
+
+private const val REFERENCE = "reference.conf"
 
 /** Pekko's parser answers 501 to a method it has not been told about. */
 private fun withQuery(settings: ServerSettings): ServerSettings =
