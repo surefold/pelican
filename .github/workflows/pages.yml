@@ -130,11 +130,14 @@ jobs:
 
       # Every module, the BOM, the Gradle plugin and its marker, into build/repo
       # (both builds' `local` repository), unsigned. The plugin is a build of its
-      # own, so the root build's publish tasks do not reach it.
+      # own, so the root build's publish tasks do not reach it. gradle.properties
+      # requires a signature on any non-snapshot version, so a tagged release
+      # cannot go out unsigned; a Pages build is not a release, and this run
+      # alone turns that off.
       - name: Publish to build/repo
         run: |
-          ./gradlew publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION"
-          ./gradlew -p tooling/pelican-gradle-plugin publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION"
+          ./gradlew publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION" -PsignAllPublications=false
+          ./gradlew -p tooling/pelican-gradle-plugin publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION" -PsignAllPublications=false
         env:
           VERSION: ${{ steps.version.outputs.value }}
 
