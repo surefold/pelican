@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-test-golden",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-openapi",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-golden-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-golden-2.1.2-pelican-g85596b78.jar",
+          "size": 26374,
+          "sha512": "e44dfcbf37205f27628c870a063df303853b333fd41565ed0634dfc513e120278e2b9e895273d8c6f7a3244a5c785a9cf7ab17244aaf88cbb6d56db6afb3faf4",
+          "sha256": "d3aba80f9d51a7699dc60183c40ca27239a3984ccc86cc736d1b13e785daba24",
+          "sha1": "33591292bad28360f8e5c8eeeab42b3dff7c04fe",
+          "md5": "fb1da7b703070859f179bac8f52340eb"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-openapi",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-golden-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-golden-2.1.2-pelican-g85596b78.jar",
+          "size": 26374,
+          "sha512": "e44dfcbf37205f27628c870a063df303853b333fd41565ed0634dfc513e120278e2b9e895273d8c6f7a3244a5c785a9cf7ab17244aaf88cbb6d56db6afb3faf4",
+          "sha256": "d3aba80f9d51a7699dc60183c40ca27239a3984ccc86cc736d1b13e785daba24",
+          "sha1": "33591292bad28360f8e5c8eeeab42b3dff7c04fe",
+          "md5": "fb1da7b703070859f179bac8f52340eb"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-test-golden-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-test-golden-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 9249,
+          "sha512": "9e9ec11b2a06705bc2dc29ca228849b0e8e54882b2aea5cb181d5061fd1b30094d30cc1e58c022dd198e1f233c198788265532570b69eecebd5a8ab0bdb946bd",
+          "sha256": "2f5867b50854db95247f40a144fd0626cc3f0b76603282d8bc59401967e85262",
+          "sha1": "a04871ae7c23749f06e8698080c8e8db87fd094a",
+          "md5": "f837fc6318a9c6a1abbc0342e1c9a09a"
+        }
+      ]
+    }
+  ]
+}

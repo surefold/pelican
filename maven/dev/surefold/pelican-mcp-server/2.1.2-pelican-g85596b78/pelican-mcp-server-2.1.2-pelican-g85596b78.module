@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-mcp-server",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-mcp",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-mcp-server-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-mcp-server-2.1.2-pelican-g85596b78.jar",
+          "size": 16543,
+          "sha512": "84a01e353c4092033bcfe52ef6fe142a6ff5de2ce22a1293cb23d204f467538308b2e672ada9fc69939fe3e17e5422f14c06d8bdd2015f6a1003a35832911e24",
+          "sha256": "2655ff31396bb459bb8c24cc465efa9d3efe41fab77d1eb43eef3f489b47362e",
+          "sha1": "9142d58f55dbeb52441cc90a3a692bddcb196c67",
+          "md5": "8caa41c937e4d4f154af90ca1ab4a8a1"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-mcp",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-mcp-server-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-mcp-server-2.1.2-pelican-g85596b78.jar",
+          "size": 16543,
+          "sha512": "84a01e353c4092033bcfe52ef6fe142a6ff5de2ce22a1293cb23d204f467538308b2e672ada9fc69939fe3e17e5422f14c06d8bdd2015f6a1003a35832911e24",
+          "sha256": "2655ff31396bb459bb8c24cc465efa9d3efe41fab77d1eb43eef3f489b47362e",
+          "sha1": "9142d58f55dbeb52441cc90a3a692bddcb196c67",
+          "md5": "8caa41c937e4d4f154af90ca1ab4a8a1"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-mcp-server-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-mcp-server-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 6930,
+          "sha512": "ef3faa950964c4063758ed902170559c337ba28594c3d2b9bee34b58030c4e1c47bae50a06de6df3b45609234bd73ff3075fe6b26420206e87ef44ca07c640cb",
+          "sha256": "4eef99ae8dffb55135e709f82c67e7dd673b0c71068d0c29073faa36e612d486",
+          "sha1": "c4fb669381bdfeb767bd3aa939acff16b445a69a",
+          "md5": "6793f796cb940ce55a23c046c5e8216f"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-pekko-mcp",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-pekko",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-mcp-server",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-pekko-mcp-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-pekko-mcp-2.1.2-pelican-g85596b78.jar",
+          "size": 6995,
+          "sha512": "ec91d66700dcf6a6e5c43efc2353bb95fde8e172ac79cbea46a62703174d7d170456d3a4a7e3bcc2b2ca5a5077a7cb1eea5ffa73ce05b53f3734f0866bae36dd",
+          "sha256": "6dd60f2a730f9a3e7e0c3bd1414d82d70726739d83c55c692850fc9909c481db",
+          "sha1": "f99a24a33f7c0d7e429d25af9a39c398e1dc0d1b",
+          "md5": "b03babbadad960e7cd40d340d0deb760"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-pekko",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-mcp-server",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-pekko-mcp-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-pekko-mcp-2.1.2-pelican-g85596b78.jar",
+          "size": 6995,
+          "sha512": "ec91d66700dcf6a6e5c43efc2353bb95fde8e172ac79cbea46a62703174d7d170456d3a4a7e3bcc2b2ca5a5077a7cb1eea5ffa73ce05b53f3734f0866bae36dd",
+          "sha256": "6dd60f2a730f9a3e7e0c3bd1414d82d70726739d83c55c692850fc9909c481db",
+          "sha1": "f99a24a33f7c0d7e429d25af9a39c398e1dc0d1b",
+          "md5": "b03babbadad960e7cd40d340d0deb760"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-pekko-mcp-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-pekko-mcp-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 2322,
+          "sha512": "b9480dd105a73bb42ba8c82158a3c51a71a1c0c31923a3c0a2013e7bcb120655eb9e0cdfb220bed66293152effd87ee68d754b7b65b46daee0f12a8d34f94de8",
+          "sha256": "e4e32140135131f79fadf1dccfe422999db14c7a2290d76a1462600dec58d0f7",
+          "sha1": "d9cc5ba25f071ac110e95485663e9416deefb497",
+          "md5": "97753621c336864be84e9ffaa098ede2"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-test-wiremock",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.wiremock",
+          "module": "wiremock-standalone",
+          "version": {
+            "requires": "3.13.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-wiremock-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-wiremock-2.1.2-pelican-g85596b78.jar",
+          "size": 53660,
+          "sha512": "5479dbeba2c9fd3fd7b8b91c6564f73713139b467f27e7e6be2f56e6e41457f7befb1104f986766001c27cdf1805829c5e9d9bd9379790aaa5552670b7a52c49",
+          "sha256": "f5cb6c604eaba22a699aa41d2cbdaec5de77287ddcdd812585f72d92dca7b100",
+          "sha1": "9a8feafa1bf29226c3df44f23a8efe52c6a656aa",
+          "md5": "52f2e15685e26a0afe56210eda1c4219"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.wiremock",
+          "module": "wiremock-standalone",
+          "version": {
+            "requires": "3.13.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-wiremock-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-wiremock-2.1.2-pelican-g85596b78.jar",
+          "size": 53660,
+          "sha512": "5479dbeba2c9fd3fd7b8b91c6564f73713139b467f27e7e6be2f56e6e41457f7befb1104f986766001c27cdf1805829c5e9d9bd9379790aaa5552670b7a52c49",
+          "sha256": "f5cb6c604eaba22a699aa41d2cbdaec5de77287ddcdd812585f72d92dca7b100",
+          "sha1": "9a8feafa1bf29226c3df44f23a8efe52c6a656aa",
+          "md5": "52f2e15685e26a0afe56210eda1c4219"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-test-wiremock-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-test-wiremock-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 12412,
+          "sha512": "26ac80695faa81be940011a938d7ad98614c68282f36769014d47f63aec732ab839a0bd228de0b95e926b6f4037f552d70706b24f6da5ac0ae56000e74e5b9c1",
+          "sha256": "084e0fc3ebefcc76654de63d6fafdee0da68ecba04c3b1ea1ebceed8f8c9fd97",
+          "sha1": "b6ce4402596f0e93ec1f121794ca8cdeba39f844",
+          "md5": "79fd5d144058aabdff5a0e3da7f55a3f"
+        }
+      ]
+    }
+  ]
+}

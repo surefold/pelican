@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-health-kafka",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-health",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-health-kafka-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-health-kafka-2.1.2-pelican-g85596b78.jar",
+          "size": 3296,
+          "sha512": "a143b55f314d325ed91d96d776871947fecbd778fa4758a6b9f1cefbae3538ba30ddd95d70f094543d14aba0a7d31c1e4f9dc4ce5da1002ebf4af9bc0d3db7a6",
+          "sha256": "c25691472fbcda1c2c16f9fdce8118b8d1fb6efdc248a277a7cbe54af873b514",
+          "sha1": "43ebaa59b89c93bb38990060aa8773fac4960e88",
+          "md5": "a07a533b7d01d086a4c85ded69929771"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-health",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-health-kafka-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-health-kafka-2.1.2-pelican-g85596b78.jar",
+          "size": 3296,
+          "sha512": "a143b55f314d325ed91d96d776871947fecbd778fa4758a6b9f1cefbae3538ba30ddd95d70f094543d14aba0a7d31c1e4f9dc4ce5da1002ebf4af9bc0d3db7a6",
+          "sha256": "c25691472fbcda1c2c16f9fdce8118b8d1fb6efdc248a277a7cbe54af873b514",
+          "sha1": "43ebaa59b89c93bb38990060aa8773fac4960e88",
+          "md5": "a07a533b7d01d086a4c85ded69929771"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-health-kafka-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-health-kafka-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 1623,
+          "sha512": "2751295004c5260e836e5f05b9da8f8d9fd164dacfa5be753ba6803da898e866ebae7c1a96225183fe0c3a6ac12946758c7e2698992dcf52fbb81e0563ec4e9a",
+          "sha256": "1252b1f5653eb659015d94017299e3531be81ab4f1407f5d65e1403f7bdc22fd",
+          "sha1": "4435d686fb725350b7614253aca03b4a212c6455",
+          "md5": "20f71541f712dae19b4b4723390e6674"
+        }
+      ]
+    }
+  ]
+}

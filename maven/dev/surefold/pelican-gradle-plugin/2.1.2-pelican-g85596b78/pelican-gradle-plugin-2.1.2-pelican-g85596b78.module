@@ -1,0 +1,119 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-gradle-plugin",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "pelican-gradle-plugin-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-gradle-plugin-2.1.2-pelican-g85596b78.jar",
+          "size": 103669,
+          "sha512": "4b25237db6dd2ee24d737aecb71c674a90089fe52d54c3909f411e5adf991d57923924e79f2c7332b004c0ca72827085b683a37e6009f18846416cb5efe76ca9",
+          "sha256": "7049202ddb92170dde0baac87fd41338f83b2dfa0be4090aad73d0e52f159eb4",
+          "sha1": "c45538b398228d51521682b1bd8a55f0c4dcc74e",
+          "md5": "852f5f9ea122a42266df5b600010a294"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-gradle-plugin-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-gradle-plugin-2.1.2-pelican-g85596b78.jar",
+          "size": 103669,
+          "sha512": "4b25237db6dd2ee24d737aecb71c674a90089fe52d54c3909f411e5adf991d57923924e79f2c7332b004c0ca72827085b683a37e6009f18846416cb5efe76ca9",
+          "sha256": "7049202ddb92170dde0baac87fd41338f83b2dfa0be4090aad73d0e52f159eb4",
+          "sha1": "c45538b398228d51521682b1bd8a55f0c4dcc74e",
+          "md5": "852f5f9ea122a42266df5b600010a294"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-gradle-plugin-2.1.2-pelican-g85596b78-javadoc.jar",
+          "url": "pelican-gradle-plugin-2.1.2-pelican-g85596b78-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-gradle-plugin-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-gradle-plugin-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 17711,
+          "sha512": "c0120d81faa8cbda228e176b29df4e70f5b2be7fb13cd420d9478cbdaebfc9943812d05c8de97aca476ce5f6bf8480260d6f15d2dd1a4465dba1ee0f1cc289cd",
+          "sha256": "e5cd8316d1075ed87cde9e561bd08270e48ec8dbd0f95ec22aad3f284c240dcd",
+          "sha1": "0a64eab591342ae40b930791b86463e0b2fd62cc",
+          "md5": "d7926a64f9d34ad0debd82be73f5ff90"
+        }
+      ]
+    }
+  ]
+}

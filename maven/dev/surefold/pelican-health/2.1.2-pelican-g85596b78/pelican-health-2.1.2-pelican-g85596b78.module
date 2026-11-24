@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-health",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-health-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-health-2.1.2-pelican-g85596b78.jar",
+          "size": 34327,
+          "sha512": "31d9ebe8f1e6bfb9f31b9393eda4a44fe02683cd3763876de428425be52926e51665d57a1542021428a1bf02b9410d664ca9cf7b02f2eec42a4e901c41a378ff",
+          "sha256": "a6bdee8af7c4975f9e1cfba752b8eb9a36a5d3e6ad51027bcf34457d39ab5ce7",
+          "sha1": "77ef7fbf625494809dd4592f68cc53ce56dda7dc",
+          "md5": "b17e3a0f3a1291230cb1f5049b9c95d2"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-health-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-health-2.1.2-pelican-g85596b78.jar",
+          "size": 34327,
+          "sha512": "31d9ebe8f1e6bfb9f31b9393eda4a44fe02683cd3763876de428425be52926e51665d57a1542021428a1bf02b9410d664ca9cf7b02f2eec42a4e901c41a378ff",
+          "sha256": "a6bdee8af7c4975f9e1cfba752b8eb9a36a5d3e6ad51027bcf34457d39ab5ce7",
+          "sha1": "77ef7fbf625494809dd4592f68cc53ce56dda7dc",
+          "md5": "b17e3a0f3a1291230cb1f5049b9c95d2"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-health-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-health-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 6945,
+          "sha512": "88a5067906f765c005d842a2cb9d461fe4352595f15a3d8d41a1b5bd5c45cd118ffdc16564e980ec44a44ccddf2bad423f3c033cef1732f9635e1ce0eb3e025e",
+          "sha256": "ad5af405c7edf5f3dd04bae9c9f93465f56668459d6a1a58d713d0ac2f0ea5f5",
+          "sha1": "2103170dc284a3a8d3eee8a2e179d664e4d15518",
+          "md5": "99585beda362cee6fb313259c740d45d"
+        }
+      ]
+    }
+  ]
+}

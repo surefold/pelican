@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-jackson",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.datatype",
+          "module": "jackson-datatype-jsr310",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-jackson-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-jackson-2.1.2-pelican-g85596b78.jar",
+          "size": 41842,
+          "sha512": "ea7ec00eb42c2a7098ec613a91d8bd4b2555391c2149e2efe83af2b1f4413eb48f5b1c6738bee28e5486150d093e8c4006087bd012df5b1c1f6f49a610f178e9",
+          "sha256": "9d93c6d0695b926464abaf00b978f72f16f22f5ba80c336425d44e4f85dd7af1",
+          "sha1": "e5d0d54f4eb2020cd56efee2eb4ae8cd2343d1e4",
+          "md5": "141509ebee950bbe6094cd6265693e1c"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.swagger.core.v3",
+          "module": "swagger-core-jakarta",
+          "version": {
+            "requires": "2.2.55"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.datatype",
+          "module": "jackson-datatype-jsr310",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-jackson-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-jackson-2.1.2-pelican-g85596b78.jar",
+          "size": 41842,
+          "sha512": "ea7ec00eb42c2a7098ec613a91d8bd4b2555391c2149e2efe83af2b1f4413eb48f5b1c6738bee28e5486150d093e8c4006087bd012df5b1c1f6f49a610f178e9",
+          "sha256": "9d93c6d0695b926464abaf00b978f72f16f22f5ba80c336425d44e4f85dd7af1",
+          "sha1": "e5d0d54f4eb2020cd56efee2eb4ae8cd2343d1e4",
+          "md5": "141509ebee950bbe6094cd6265693e1c"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-jackson-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-jackson-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 13265,
+          "sha512": "cb45bf1bd8fb6abe57ac87fe21abff08c5e3058bbc9bebb99af04f53f9a6f20d4110dcc8a96a4a300014f3960b4478911e7c57c7b46c5aa7247b8dfab73ab828",
+          "sha256": "1214a0a0486f6962ce9d054e9c04948744b469991039ebf48c7c2698939919a8",
+          "sha1": "fcf3a4f3123cdb806ca9fa924c3416ef75dd5b39",
+          "md5": "9aac9d0f55f02486ab39a2ec5cbcc78f"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-test-jetty",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-jetty",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 8321,
+          "sha512": "c5a2a90e2d83e6847dd5fba08f92f8cccb2bb8a5be717037e8243808170615a81e4121b3799e55f50816c1750ba83dfdd898d895e9951662d0ca6960410d64cc",
+          "sha256": "aa96152efe1c2f0362b21a14b68a7ea8e0ee46e802e4f851faef605ffdcb21b4",
+          "sha1": "9141a499aaf998ef0a7cc9ecc35b3a22fbe9fed0",
+          "md5": "22199401ed0b77a47ebd334eeb7b1439"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-test",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-jetty",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-test-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-test-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 8321,
+          "sha512": "c5a2a90e2d83e6847dd5fba08f92f8cccb2bb8a5be717037e8243808170615a81e4121b3799e55f50816c1750ba83dfdd898d895e9951662d0ca6960410d64cc",
+          "sha256": "aa96152efe1c2f0362b21a14b68a7ea8e0ee46e802e4f851faef605ffdcb21b4",
+          "sha1": "9141a499aaf998ef0a7cc9ecc35b3a22fbe9fed0",
+          "md5": "22199401ed0b77a47ebd334eeb7b1439"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-test-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-test-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 2581,
+          "sha512": "169cfaba90a36db07697d7c34da629c78f994f4a658a7d7c1108b107ba4f17fa4c20d40a67f2f5e0d2ad0d8426d238c71fdfe6d174599febb483ee34ad6ba7bc",
+          "sha256": "136ce0cf86b534d96ee70247745ee4aad195d0464c8781a9e9e262cb50cc6da3",
+          "sha1": "77c2e8a6b538b8fd45576301c0ddc06e54adf9f1",
+          "md5": "1349938b62ae061a5d1a1ac3f0b72236"
+        }
+      ]
+    }
+  ]
+}

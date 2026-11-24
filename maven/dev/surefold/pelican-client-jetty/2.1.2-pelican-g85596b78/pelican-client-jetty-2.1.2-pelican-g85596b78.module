@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-client-jetty",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.eclipse.jetty",
+          "module": "jetty-client",
+          "version": {
+            "requires": "12.1.13"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-client-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-client-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 12306,
+          "sha512": "fac1e290f03ce2903e7d3853f1e7c941eb2eac2f0f0960ee42d937712eb3252b92c0a8523daa8ba9c19d227ffa5a44db9e612c4713201f5a6e98b3b813814f91",
+          "sha256": "a93f1f52fba8499d6202cf883e365aee48e739c0a99d5b78f540be481de465ad",
+          "sha1": "8cc7ab80231c37512726681109981755c401f17d",
+          "md5": "471a5c71fdf4610b6a947209217c31b6"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.eclipse.jetty",
+          "module": "jetty-client",
+          "version": {
+            "requires": "12.1.13"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-client-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-client-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 12306,
+          "sha512": "fac1e290f03ce2903e7d3853f1e7c941eb2eac2f0f0960ee42d937712eb3252b92c0a8523daa8ba9c19d227ffa5a44db9e612c4713201f5a6e98b3b813814f91",
+          "sha256": "a93f1f52fba8499d6202cf883e365aee48e739c0a99d5b78f540be481de465ad",
+          "sha1": "8cc7ab80231c37512726681109981755c401f17d",
+          "md5": "471a5c71fdf4610b6a947209217c31b6"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-client-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-client-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 3841,
+          "sha512": "4d66843258826eb9809dfedbc6c96f526c56a5304fe39327a246732750dd040b4e81b4f77f9a80b18a56375edf54a8c1455f9360848fc9f8694187502fa1454a",
+          "sha256": "81360b05e5755b32dfe75cfb15f8827b38fa828163acf85ed14f90e928c88777",
+          "sha1": "818b66eab60eb0eb12b7f9a8d57b8089ba6681ff",
+          "md5": "1967596fbcf5064914c948d27c0fe73f"
+        }
+      ]
+    }
+  ]
+}

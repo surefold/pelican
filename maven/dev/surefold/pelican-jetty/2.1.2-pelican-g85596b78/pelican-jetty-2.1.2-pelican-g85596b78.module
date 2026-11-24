@@ -1,0 +1,144 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-jetty",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.eclipse.jetty",
+          "module": "jetty-server",
+          "version": {
+            "requires": "12.1.13"
+          }
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-api",
+          "version": {
+            "requires": "2.0.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 112121,
+          "sha512": "30b9ab951d0fd5b3b9d6d0e07fa5ecbf3aeffc8dc3e9c2ecb84e7e316cd20c6615ab722b1b6c83a9108d4db0ea930874bd3a0628f7c35d16c556bee99e914e1f",
+          "sha256": "0cc8d7f173bf4f84eed03081f453909e9365f653629ddf54176f92a3feab379b",
+          "sha1": "2ac9763fcedd518fa5fba9847f886d2aa99a0773",
+          "md5": "027b0c521f72bc905cd069e5f0d83d51"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.eclipse.jetty",
+          "module": "jetty-server",
+          "version": {
+            "requires": "12.1.13"
+          }
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-api",
+          "version": {
+            "requires": "2.0.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-jetty-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-jetty-2.1.2-pelican-g85596b78.jar",
+          "size": 112121,
+          "sha512": "30b9ab951d0fd5b3b9d6d0e07fa5ecbf3aeffc8dc3e9c2ecb84e7e316cd20c6615ab722b1b6c83a9108d4db0ea930874bd3a0628f7c35d16c556bee99e914e1f",
+          "sha256": "0cc8d7f173bf4f84eed03081f453909e9365f653629ddf54176f92a3feab379b",
+          "sha1": "2ac9763fcedd518fa5fba9847f886d2aa99a0773",
+          "md5": "027b0c521f72bc905cd069e5f0d83d51"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-jetty-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 28471,
+          "sha512": "ecf1dc50097b25012f335bfb2d15886eefd893d385b3e01b39e8fed2306539fa15b9501ca3b41272cd3e737e3ae760dc5cc6ee71cbcdb84a75c40807256cb6b1",
+          "sha256": "140b18eb4fd20ffd0eb4439647368ae21e232bb879ac2a62191aa9c9a5f15db2",
+          "sha1": "18d09d70fa9f3dfb9e6db3e39a99f008e880de42",
+          "md5": "b8b890958cba98b0ef426ae681874633"
+        }
+      ]
+    }
+  ]
+}

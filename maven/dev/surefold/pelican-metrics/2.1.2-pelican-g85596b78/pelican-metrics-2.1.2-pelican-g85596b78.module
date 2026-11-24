@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-metrics",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "io.micrometer",
+          "module": "micrometer-core",
+          "version": {
+            "requires": "1.17.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-metrics-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-metrics-2.1.2-pelican-g85596b78.jar",
+          "size": 16496,
+          "sha512": "9a0346e124ccc5716c369e404c46a60f28463e3a691527d1bb7ef4808544877737f37e0125e4011a678fb8570d1d6f94b9a73d65b902c25da01ed4690f9d0f60",
+          "sha256": "6831bdec420242415ad21e1020df600437459577ae507c9592186562bb8590ec",
+          "sha1": "67485a335a7f8822021bdaa465e47a29374b1c5c",
+          "md5": "d4f9b1c208262d736a8d40e2c0d28935"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "io.micrometer",
+          "module": "micrometer-core",
+          "version": {
+            "requires": "1.17.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-metrics-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-metrics-2.1.2-pelican-g85596b78.jar",
+          "size": 16496,
+          "sha512": "9a0346e124ccc5716c369e404c46a60f28463e3a691527d1bb7ef4808544877737f37e0125e4011a678fb8570d1d6f94b9a73d65b902c25da01ed4690f9d0f60",
+          "sha256": "6831bdec420242415ad21e1020df600437459577ae507c9592186562bb8590ec",
+          "sha1": "67485a335a7f8822021bdaa465e47a29374b1c5c",
+          "md5": "d4f9b1c208262d736a8d40e2c0d28935"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-metrics-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-metrics-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 4890,
+          "sha512": "f15a4e0f89b70927229d3f30b35b26783af849daf7d59909753a734796a821a221a3eddff7767d45f754628ccb5894663c3d6495bcf1b9bfb295de90ef52cb16",
+          "sha256": "c97b4b181253f0610376252bbe9a6b24038e3b9f843ea7447e3d92408eb70c53",
+          "sha1": "248066ac808f8c35e06bf463e5eed899fd78dccc",
+          "md5": "e57d2444855e18361fcf4d04a2df33be"
+        }
+      ]
+    }
+  ]
+}

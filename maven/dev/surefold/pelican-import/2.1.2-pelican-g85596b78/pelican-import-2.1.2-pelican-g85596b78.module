@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-import",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-codegen",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-import-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-import-2.1.2-pelican-g85596b78.jar",
+          "size": 246435,
+          "sha512": "50be41cbd33c83274b094e853bcef83e638eb4990536218d03c5564cd4ef13931c2b106d95f702400015316e45c3d623f42e0ab7b9394d412404ab9774ea7d93",
+          "sha256": "dd824830c1f9f75968260931b0502c2b25d12d7d2fd21cf5a16e280d0e30dd62",
+          "sha1": "098cfb8401887767221edff05b19379a3f2f1d64",
+          "md5": "2c2efd157236be1804ab337213289698"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.snakeyaml",
+          "module": "snakeyaml-engine",
+          "version": {
+            "requires": "3.1.1"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-codegen",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-import-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-import-2.1.2-pelican-g85596b78.jar",
+          "size": 246435,
+          "sha512": "50be41cbd33c83274b094e853bcef83e638eb4990536218d03c5564cd4ef13931c2b106d95f702400015316e45c3d623f42e0ab7b9394d412404ab9774ea7d93",
+          "sha256": "dd824830c1f9f75968260931b0502c2b25d12d7d2fd21cf5a16e280d0e30dd62",
+          "sha1": "098cfb8401887767221edff05b19379a3f2f1d64",
+          "md5": "2c2efd157236be1804ab337213289698"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-import-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-import-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 60715,
+          "sha512": "05d49cfcd398610604f39e273873014809ac11e5c30c439bab0445a1de5eca093b5e58c96b5986dea6fb56ffdc69dc922126b99b52f7987424b37f3558de97f0",
+          "sha256": "9e5e2244317dc93d927a1801836f0a3350aba39594af23a1c555f80ea5f4ddf0",
+          "sha1": "dde61bbcdbe1b467e915af8fa83b8ea5e0677d63",
+          "md5": "11afce8459aa9d0f75949bcc10df7bed"
+        }
+      ]
+    }
+  ]
+}

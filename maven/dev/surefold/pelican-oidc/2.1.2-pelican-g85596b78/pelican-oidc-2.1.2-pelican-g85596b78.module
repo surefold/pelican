@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-oidc",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-oidc-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-oidc-2.1.2-pelican-g85596b78.jar",
+          "size": 46719,
+          "sha512": "a16053e2de0e27ddbcc9bcca8ae91ef92feb121d8275fbfce6c85ae9d6debcf370abb989b883bddbe1bf4c3188f4dd29046df8c73590059d3f319b65a82acdfe",
+          "sha256": "73171e34797c9b08b1bbbebda89442fab68b3fad98370c86f324223bc8c16569",
+          "sha1": "099081f4d661b60aa55ae8fbec69b3bf10aa5ba8",
+          "md5": "ffa3a241d1a41f2fa55b16358f6c1b5e"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.nimbusds",
+          "module": "nimbus-jose-jwt",
+          "version": {
+            "requires": "10.10"
+          }
+        },
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-oidc-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-oidc-2.1.2-pelican-g85596b78.jar",
+          "size": 46719,
+          "sha512": "a16053e2de0e27ddbcc9bcca8ae91ef92feb121d8275fbfce6c85ae9d6debcf370abb989b883bddbe1bf4c3188f4dd29046df8c73590059d3f319b65a82acdfe",
+          "sha256": "73171e34797c9b08b1bbbebda89442fab68b3fad98370c86f324223bc8c16569",
+          "sha1": "099081f4d661b60aa55ae8fbec69b3bf10aa5ba8",
+          "md5": "ffa3a241d1a41f2fa55b16358f6c1b5e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-oidc-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-oidc-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 8996,
+          "sha512": "68200dc69fa2055679023056df13661bc9f9e92db504ae58273d2c0d05e953b8900201c6caa29aa53c8cc76487acd78a724f5a5fe3d4b8eab6c58dcbbca4a482",
+          "sha256": "d353b447c7ba765dc3005e4e260784acb754bd7fd1381641b394b38d899a010f",
+          "sha1": "dd7f41f7f9791b3736744cba005c853cd81cec25",
+          "md5": "c4dfa7b423e02069c360463567d6bf72"
+        }
+      ]
+    }
+  ]
+}

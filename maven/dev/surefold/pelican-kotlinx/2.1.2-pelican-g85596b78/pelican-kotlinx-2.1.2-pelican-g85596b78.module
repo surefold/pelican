@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-kotlinx",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-kotlinx-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-kotlinx-2.1.2-pelican-g85596b78.jar",
+          "size": 20293,
+          "sha512": "314fbc77201cf947f6aaa26007c62b266b01dc5125155e4c6b4b46d71d84bea3d8e9ffc308203543a69c969483ffff31849dcc252cb190cc67a739f8d804afbe",
+          "sha256": "0bde51ce672b3dcf303e09408d6d2f7e72aaa718de2f9d9f7b21e4c5e33e0e4f",
+          "sha1": "d71f8aac85e76f1f89d77be36a6ffa012cb83586",
+          "md5": "3a6099b0bc34ed8df6aaab7e28ae3534"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-kotlinx-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-kotlinx-2.1.2-pelican-g85596b78.jar",
+          "size": 20293,
+          "sha512": "314fbc77201cf947f6aaa26007c62b266b01dc5125155e4c6b4b46d71d84bea3d8e9ffc308203543a69c969483ffff31849dcc252cb190cc67a739f8d804afbe",
+          "sha256": "0bde51ce672b3dcf303e09408d6d2f7e72aaa718de2f9d9f7b21e4c5e33e0e4f",
+          "sha1": "d71f8aac85e76f1f89d77be36a6ffa012cb83586",
+          "md5": "3a6099b0bc34ed8df6aaab7e28ae3534"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-kotlinx-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-kotlinx-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 6225,
+          "sha512": "c04a926ad32ab3bd47fa510a39727e086fc5b36997e8a020239e602c522a33e7e00e9387b354fad7f28a750955fa80f7b635b589f75b49ca3f839d4d6ea459bf",
+          "sha256": "8a9306421f742af36adf68094f4cf6793669a4380755c50f446c5365fb95018a",
+          "sha1": "71a1fc6e96efd0e32d44d0cb0b12b7c3b3dd9e87",
+          "md5": "755700771b5a1b1429b6bfceb4ec4ee5"
+        }
+      ]
+    }
+  ]
+}

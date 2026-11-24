@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "dev.surefold",
+    "module": "pelican-metrics-otel",
+    "version": "2.1.2-pelican-g85596b78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "io.opentelemetry",
+          "module": "opentelemetry-api",
+          "version": {
+            "requires": "1.67.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-metrics-otel-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-metrics-otel-2.1.2-pelican-g85596b78.jar",
+          "size": 26845,
+          "sha512": "16110de326b2c1d5e1142e9cca1dc3b87bca1413f8c401ec7922181544f7ac8e9fe0b9c2a82fa4ded43ed69aefedafe0f0d8129dd7febe1189f419451023e941",
+          "sha256": "1a66a4c008984a2364a9235310a1e62fcbda615299b7bd9c64d7357dc323c217",
+          "sha1": "468bf2564b65c4ac71927b0872076ce6a59702b8",
+          "md5": "29acbf0f5eb83fbaba0d081b78e75632"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "dev.surefold",
+          "module": "pelican-core",
+          "version": {
+            "requires": "2.1.2-pelican-g85596b78"
+          }
+        },
+        {
+          "group": "io.opentelemetry",
+          "module": "opentelemetry-api",
+          "version": {
+            "requires": "1.67.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pelican-metrics-otel-2.1.2-pelican-g85596b78.jar",
+          "url": "pelican-metrics-otel-2.1.2-pelican-g85596b78.jar",
+          "size": 26845,
+          "sha512": "16110de326b2c1d5e1142e9cca1dc3b87bca1413f8c401ec7922181544f7ac8e9fe0b9c2a82fa4ded43ed69aefedafe0f0d8129dd7febe1189f419451023e941",
+          "sha256": "1a66a4c008984a2364a9235310a1e62fcbda615299b7bd9c64d7357dc323c217",
+          "sha1": "468bf2564b65c4ac71927b0872076ce6a59702b8",
+          "md5": "29acbf0f5eb83fbaba0d081b78e75632"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "pelican-metrics-otel-2.1.2-pelican-g85596b78-sources.jar",
+          "url": "pelican-metrics-otel-2.1.2-pelican-g85596b78-sources.jar",
+          "size": 10401,
+          "sha512": "057f2c9a32f1461cd913714ed8cc70fde002455cc24a0ea0c534d7c1d032e598e75acd8af2bdf297853bddad2121d0b5e1315d1f59f62fb220584aa428974dd2",
+          "sha256": "6403316d7a8d8ea22b8c9c838e64d131f1d6b1580c70cec2dd554493905fa990",
+          "sha1": "794947f8b4016def5a5b0f51bce9cea330809db2",
+          "md5": "b746594741ef23aaa8a3bd13812fc58a"
+        }
+      ]
+    }
+  ]
+}
