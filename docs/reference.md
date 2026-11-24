@@ -4795,7 +4795,8 @@ build of the plugin instead, `./gradlew -p tooling/pelican-gradle-plugin
 publishToMavenLocal` installs it and `mavenLocal()` in the same block finds it.
 Every push to `main` also publishes the libraries and the plugin as a
 `-SNAPSHOT` to GitHub Packages, `https://maven.pkg.github.com/surefold/pelican`,
-where they do not expire. GitHub Packages asks for a token even to read a
+where they do not expire, and every release goes there as well as to Central.
+GitHub Packages asks for a token even to read a
 public package, so that repository needs credentials: a classic personal access
 token with only `read:packages`.
 

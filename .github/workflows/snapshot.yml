@@ -2,8 +2,8 @@ name: snapshot
 
 # A snapshot of every push to main, and of a branch when dispatched from it, on
 # GitHub Packages (surefold spec 0281): https://maven.pkg.github.com/surefold/pelican.
-# It does not expire, unlike Central's snapshot repository. Releases stay on
-# Central (publish.yml).
+# It does not expire, unlike Central's snapshot repository. publish.yml puts
+# releases on Central and here.
 #
 # Consumers add that repository with a classic personal access token holding
 # only read:packages, since GitHub Packages asks for one even to read a public
