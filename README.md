@@ -270,7 +270,7 @@ did not.
 
 ## Getting started
 
-The current release is **2.1.0**, on Maven Central under the group
+The current release is **2.1.1**, on Maven Central under the group
 `dev.surefold`, with packages under `dev.surefold.pelican` and the Gradle
 plugin ID `dev.surefold.pelican`. Up to 1.2.0 all three were
 `io.github.matthewjones372`; [Upgrading from 1.2.0](#upgrading-from-120) is
@@ -300,7 +300,7 @@ test client.
 
 ```kotlin
 // build.gradle.kts
-val pelicanVersion = "2.1.0"
+val pelicanVersion = "2.1.1"
 
 dependencies {
     // The backend. Brings pelican-core; compiles against Pekko HTTP.
@@ -425,7 +425,7 @@ pluginManagement {
 
 ```kotlin
 // build.gradle.kts
-plugins { id("dev.surefold.pelican") version "2.1.0" }
+plugins { id("dev.surefold.pelican") version "2.1.1" }
 ```
 
 ### Jetty, kotlinx and the BOM
@@ -452,7 +452,7 @@ leave out the ones you do not.
 
 ```kotlin
 dependencies {
-    implementation(platform("dev.surefold:pelican-bom:2.1.0"))
+    implementation(platform("dev.surefold:pelican-bom:2.1.1"))
     implementation("dev.surefold:pelican-jetty")
     implementation("dev.surefold:pelican-jackson")
     testImplementation("dev.surefold:pelican-test-jetty")
@@ -600,7 +600,7 @@ Every example takes a port with `--args=8081`.
 
 - [The docs index](docs/README.md): every guide, with reading orders for
   evaluating, using and going deeper.
-- [Getting started](#getting-started): installing 2.1.0 and a first endpoint.
+- [Getting started](#getting-started): installing 2.1.1 and a first endpoint.
 - [Upgrading from 1.2.0](#upgrading-from-120): the move to `dev.surefold`,
   with the command that does the rename.
 - [A whole service, in one file](docs/a-whole-service.md): models, inputs,

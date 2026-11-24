@@ -31,6 +31,8 @@ one.
 
 ## Unreleased
 
+## [2.1.1] — 2026-11-24
+
 ### Fixed
 
 - **`pelican-pekko` on Pekko HTTP 2.0.** A request that came over HTTP/2 has no
