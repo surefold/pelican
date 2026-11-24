@@ -113,7 +113,7 @@ gradlePlugin {
 }
 
 // A POM-only publication at the plugin's old coordinates, relocating to dev.surefold (spec 0107), as the root build
-// declares for the libraries. GitHub Packages, which keeps snapshots, takes dev.surefold only.
+// declares for the libraries. GitHub Packages takes dev.surefold only.
 publishing {
     publications.register<MavenPublication>("relocation") {
         groupId = "io.github.matthewjones372"
@@ -159,7 +159,7 @@ publishing {
             name = "local"
             url = file("../../build/repo").toURI()
         }
-        // Snapshots, beside the root build's (surefold spec 0281).
+        // Snapshots and releases, beside the root build's (surefold spec 0281).
         maven {
             name = "githubPackages"
             url = uri("https://maven.pkg.github.com/surefold/pelican")

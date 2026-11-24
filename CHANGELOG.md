@@ -31,6 +31,11 @@ one.
 
 ## Unreleased
 
+### Changed
+
+- **Releases are on GitHub Packages too**, `https://maven.pkg.github.com/surefold/pelican`, beside the snapshots, as
+  well as on Maven Central. Central stays the record; reading from GitHub Packages takes a token with `read:packages`.
+
 ## [2.1.1] — 2026-11-24
 
 ### Fixed

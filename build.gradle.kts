@@ -394,8 +394,9 @@ fun Project.publishWithPom() {
                 name = "local"
                 url = rootProject.layout.buildDirectory.dir("repo").get().asFile.toURI()
             }
-            // Snapshots (surefold spec 0281): snapshot.yml runs `publishAllPublicationsToGithubPackagesRepository`
-            // with the workflow's token as githubPackagesUsername/githubPackagesPassword. Releases stay on Central.
+            // Snapshots (surefold spec 0281) and releases: snapshot.yml and publish.yml run
+            // `publishAllPublicationsToGithubPackagesRepository` with the workflow's token as
+            // githubPackagesUsername/githubPackagesPassword.
             maven {
                 name = "githubPackages"
                 url = uri("https://maven.pkg.github.com/surefold/pelican")
@@ -446,7 +447,7 @@ fun Project.onlyOneNamespaceToCentral() {
     }
 }
 
-/** The relocation POMs are for Central: GitHub Packages, which keeps snapshots, takes `dev.surefold` only. */
+/** The relocation POMs are for Central: GitHub Packages takes `dev.surefold` only. */
 fun Project.onlyDevSurefoldToGithubPackages() = tasks.withType<PublishToMavenRepository>().configureEach {
     onlyIf("only dev.surefold goes to GitHub Packages") { task ->
         val publish = task as PublishToMavenRepository
