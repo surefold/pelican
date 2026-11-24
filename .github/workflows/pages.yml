@@ -1,0 +1,170 @@
+name: pages
+
+# A commit of main, built and published as a static Maven repository on this
+# repository's GitHub Pages site: https://surefold.github.io/pelican/maven, as
+# surefold-core does. Pages serves it with no token, which GitHub Packages
+# cannot do even for a public package, so a consumer can depend on an
+# unreleased commit without one and without waiting for a Central release.
+#
+# Run by hand, only when someone needs a build of an unreleased commit, so the
+# `gh-pages` branch stays small. The version names the commit and is never a
+# snapshot or a release: `<base>-<label>-g<first 8 hex of the commit>`, e.g.
+# `2.1.2-pelican-g400d15f8`. A version once published is never written again,
+# and a dispatch for one that is already there fails without writing. Releases
+# stay on Central (publish.yml), which this does not touch.
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: "Full SHA of the commit on main to publish."
+        type: string
+        required: true
+      label:
+        description: "Lower-case letters and digits between the base version and the commit, e.g. pelican."
+        type: string
+        default: pelican
+
+permissions:
+  contents: read
+
+# One publish at a time: two would race to push gh-pages.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  pages:
+    runs-on: ubuntu-24.04
+    # To push the gh-pages branch. Nothing else here writes to the repository.
+    # No signing key: a Pages build is not signed, and a job that does not hold
+    # the key cannot sign a release by mistake.
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check the inputs
+        run: |
+          printf '%s' "$COMMIT" | grep -Eqx '[0-9a-f]{40}' || { echo "commit must be a full 40-hex SHA, not $COMMIT"; exit 1; }
+          printf '%s' "$LABEL" | grep -Eqx '[a-z0-9]+' || { echo "label must be lower-case letters and digits, not $LABEL"; exit 1; }
+        env:
+          COMMIT: ${{ inputs.commit }}
+          LABEL: ${{ inputs.label }}
+
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.commit }}
+          # The base version is derived from the nearest `v` tag, and a shallow
+          # checkout has no tags to derive it from. Full history also brings
+          # main and gh-pages.
+          fetch-depth: 0
+
+      - name: Only a commit of main
+        run: |
+          git merge-base --is-ancestor "$COMMIT" origin/main || { echo "$COMMIT is not on main"; exit 1; }
+        env:
+          COMMIT: ${{ inputs.commit }}
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      # axion reads `2.1.2-SNAPSHOT` off an untagged commit after v2.1.1, and
+      # `2.1.1` on the tag itself: either way the base is the X.Y.Z part.
+      - name: Version
+        id: version
+        run: |
+          current=$(./gradlew -q currentVersion | awk 'NF { last = $NF } END { print last }')
+          base=${current%-SNAPSHOT}
+          printf '%s' "$base" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+' || { echo "cannot take a base version from $current"; exit 1; }
+          version="$base-$LABEL-g$(printf '%s' "$COMMIT" | cut -c1-8)"
+          # Never a release's plain X.Y.Z, and never a snapshot.
+          printf '%s' "$version" | grep -Eqx '[0-9]+\.[0-9]+\.[0-9]+-[a-z0-9]+-g[0-9a-f]{8}' || { echo "refusing version $version"; exit 1; }
+          echo "version: $version"
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+        env:
+          COMMIT: ${{ inputs.commit }}
+          LABEL: ${{ inputs.label }}
+
+      # axion keeps `-SNAPSHOT` on a forced version off a tag, and a Pages build
+      # is not a snapshot. A tag in this runner's clone only, never pushed (the
+      # push below names gh-pages alone), makes the commit read as the version
+      # itself, in the root build and in the Gradle plugin's, which takes the
+      # version of a tagged HEAD as it is. publish.yml ignores `v*-*` tags even
+      # if one were pushed.
+      - name: Tag the version here only
+        run: |
+          git -c tag.gpgsign=false tag "v$VERSION" "$COMMIT"
+          read=$(./gradlew -q currentVersion -Prelease.forceVersion="$VERSION" | awk 'NF { last = $NF } END { print last }')
+          [ "$read" = "$VERSION" ] || { echo "the build reads $read, not $VERSION"; exit 1; }
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+          COMMIT: ${{ inputs.commit }}
+
+      # gh-pages beside the build, not inside it. The first run starts the branch.
+      - name: Check out gh-pages
+        run: |
+          site="$RUNNER_TEMP/gh-pages"
+          if git rev-parse --verify -q origin/gh-pages >/dev/null; then
+            git worktree add --detach "$site" origin/gh-pages
+          else
+            git worktree add --orphan -b gh-pages "$site"
+            # Serve the files as they are, without Jekyll.
+            touch "$site/.nojekyll"
+          fi
+
+      # Before anything is built or written: a version already there is never rewritten.
+      - name: Refuse a version already published
+        run: |
+          site="$RUNNER_TEMP/gh-pages"
+          if [ -d "$site/maven/dev/surefold" ]; then
+            found=$(find "$site/maven/dev/surefold" -mindepth 2 -type d -name "$VERSION")
+            if [ -n "$found" ]; then
+              echo "$VERSION is already published:"; echo "$found"; exit 1
+            fi
+          fi
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+
+      # Every module, the BOM, the Gradle plugin and its marker, into build/repo
+      # (both builds' `local` repository), unsigned. The plugin is a build of its
+      # own, so the root build's publish tasks do not reach it.
+      - name: Publish to build/repo
+        run: |
+          ./gradlew publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION"
+          ./gradlew -p tooling/pelican-gradle-plugin publishAllPublicationsToLocalRepository --no-configuration-cache -Prelease.forceVersion="$VERSION"
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+
+      # Only dev.surefold, so not the relocation POMs at the old group, which are
+      # for Central. The plugin marker's group is the plugin ID, under dev/surefold too.
+      # shortcut: no maven-metadata.xml, so a version resolves only when named
+      # exactly, not by a range or `latest`; merge the metadata if that is needed.
+      - name: Copy into gh-pages
+        run: |
+          find build/repo -name 'maven-metadata.xml*' -delete
+          mkdir -p "$RUNNER_TEMP/gh-pages/maven"
+          cp -R build/repo/dev "$RUNNER_TEMP/gh-pages/maven/"
+
+      # A new version only adds files: anything changed or removed means
+      # something already published would be rewritten.
+      - name: Push gh-pages
+        run: |
+          cd "$RUNNER_TEMP/gh-pages"
+          git add -A
+          if git rev-parse --verify -q HEAD >/dev/null; then
+            rewritten=$(git diff --cached --name-only --diff-filter=DMRT HEAD)
+            if [ -n "$rewritten" ]; then
+              echo "refusing to rewrite published files:"; echo "$rewritten"; exit 1
+            fi
+          fi
+          find maven -type d -name "$VERSION" -exec du -sk {} + |
+            awk -v v="$VERSION" '{ kb += $1; n++ } END { printf "%s: %d directories, %.1f MB\n", v, n, kb / 1024 }'
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Publish $VERSION from $COMMIT"
+          git push origin HEAD:refs/heads/gh-pages
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+          COMMIT: ${{ inputs.commit }}
