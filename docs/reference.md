@@ -2,7 +2,7 @@
 
 Every module, how it behaves and where it stops, for the API on `main`. Start
 with the [README](../README.md) if you have not read it yet: it says what the
-2.1.0 release contains and how to install it.
+2.1.1 release contains and how to install it.
 
 Endpoints are values. Interpreters turn them into a Jetty handler or a Pekko
 HTTP route, and into an OpenAPI document (3.1.0 or 3.2.0, whichever the people
@@ -23,13 +23,13 @@ Worked, step-by-step versions of most of this are in the [cookbook](cookbook.md)
 
 ## Modules
 
-The second column says whether a module is in the 2.1.0 release. The ones
+The second column says whether a module is in the 2.1.1 release. The ones
 marked `main` are built and tested on `main` but not yet released: the Gannet
 modules, which depend on a Gannet snapshot. Which modules a service needs is
 [Choosing modules](modules.md#choosing-modules); naming one version for all of
 them is [Version alignment and the BOM](modules.md#version-alignment-and-the-bom).
 
-| Module | 2.1.0 | Depends on | Contains |
+| Module | 2.1.1 | Depends on | Contains |
 |---|---|---|---|
 | `pelican-core` | yes | `jackson-core` *only* | endpoint descriptions, plain-value codecs, a minimal JSON tree and the parser under it. No HTTP library, and no JSON databind. |
 | `pelican-openapi` | yes | core | descriptions to an OpenAPI 3.1.0 or 3.2.0 document, in JSON or YAML, and two documents to what changed for callers |
@@ -388,7 +388,7 @@ where Pekko takes a `Source`.
 For which modules a service takes and one version for all of them, see
 [Choosing modules](modules.md#choosing-modules) and
 [Version alignment and the BOM](modules.md#version-alignment-and-the-bom).
-`$pelicanVersion` here and below is the release you pin, `"2.1.0"`:
+`$pelicanVersion` here and below is the release you pin, `"2.1.1"`:
 
 ```kotlin
 dependencies {
@@ -4751,7 +4751,7 @@ The document and the client are both readings of the same values, and both are
 build tasks:
 
 ```kotlin
-plugins { id("dev.surefold.pelican") version "2.1.0" }
+plugins { id("dev.surefold.pelican") version "2.1.1" }
 
 pelican {
     documents {
@@ -4854,7 +4854,7 @@ importer:
 
 ```kotlin
 val pelicanImport: Configuration by configurations.creating
-dependencies { pelicanImport("dev.surefold:pelican-import:2.1.0") }
+dependencies { pelicanImport("dev.surefold:pelican-import:2.1.1") }
 
 pelican { endpoints { create("orders") { classpath.setFrom(pelicanImport) } } }
 ```
@@ -6435,7 +6435,7 @@ its OpenAPI document by the plugin's `endpoints` entry:
 
 ```kotlin
 dependencies {
-    testImplementation("dev.surefold:pelican-test-wiremock:2.1.0")
+    testImplementation("dev.surefold:pelican-test-wiremock:2.1.1")
 }
 ```
 
@@ -6964,7 +6964,7 @@ already runs:
 
 ```kotlin
 dependencies {
-    implementation("dev.surefold:pelican-pekko:2.1.0")
+    implementation("dev.surefold:pelican-pekko:2.1.1")
 
     // _2.13 or _3: Pelican compiles against `javadsl` and four names that are
     // identical in both, so it has no opinion.
