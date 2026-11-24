@@ -6923,16 +6923,16 @@ place they are recorded.
 
 ## Versions
 
-What 2.0.0 is built with. `main` builds with the same versions, plus the
+What 2.1.1 is built with. `main` builds with the same versions, plus the
 library only its unreleased modules use:
 
-| | 2.0.0 |
+| | 2.1.1 |
 |---|---|
 | Kotlin | 2.4.21 |
 | Bytecode | JDK 21 (`pelican-streams`, `pelican-streams-jetty` and the `pelican-gannet` modules: JDK 25) |
-| Gradle | 9.8.2 |
-| Pekko | 1.7.1 |
-| Pekko HTTP | 1.4.1 |
+| Gradle | 9.9.0 |
+| Pekko | 1.7.1; runs on 2.0.0 too, which `example` builds and tests against |
+| Pekko HTTP | 1.4.1; runs on 2.0.0 too |
 | Jackson | 2.22.3 |
 | swagger-core | 2.2.55 |
 | slf4j-api | 2.0.20 |
@@ -6944,6 +6944,7 @@ library only its unreleased modules use:
 | nimbus-jose-jwt | 10.10 |
 | Jetty | 12.1.13 (`jetty-server`, `jetty-client`) |
 | kotlinx-serialization-json | 1.11.0 |
+| surefold-stream | 0.18.0 (`pelican-streams`, `pelican-streams-jetty`) |
 | Gannet | `main` only: 0.1.0-SNAPSHOT |
 
 The libraries Pelican ships are floors, not pins: Gradle resolves upwards, so a
