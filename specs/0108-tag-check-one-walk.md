@@ -49,7 +49,7 @@ internals. Recommend the separate walk.
 
 ## Stack
 
-- [ ] **`spec-0108-ref-counts`**: `refCounts` in place of `refsTo` in
+- [x] **`spec-0108-ref-counts`** ([#478](https://github.com/surefold/pelican/pull/478)): `refCounts` in place of `refsTo` in
       `TaggedComponents.kt`, and a test.
       Done when: `TaggedFailuresDocumentTest` passes unchanged, and a new
       case shows that a component referenced from many operations under
