@@ -41,9 +41,9 @@ interface IdempotencyStore {
   the handler has not run, so an opted-in default retry transport may safely send the keyed request again.
 - An unavailable completion or release answers a documented 500 tagged `idempotency_completion_unknown`, without
   `Retry-After`; the handler has run, so Pelican must not invite an automatic retry that could repeat its effect.
-- Pelican never calls `release` after an unavailable completion. The completion may have committed; deleting it
-  would turn a safely replayable response into a duplicate after the lease expires. If it did not commit, the
-  reservation stays in flight until that lease expires.
+- Pelican never calls `release` after an unavailable completion. If completion did not commit, releasing would
+  prematurely free the in-flight reservation; if it did, the completed row remains replayable. The ambiguous state
+  is left untouched, producing either a replay or an in-flight reservation until its lease expires.
 - Every keyed endpoint documents both failures beside its existing 409 and 422.
 - Store implementations return `Unavailable`; they do not throw operational failures.
 
@@ -79,8 +79,13 @@ keeps the current hidden contract. The small local result lets Pelican alone tra
    deliberately does not retry 500; once the handler ran, the response is unknown rather than safely unavailable.
    Reserve failure remains a retryable 503 with `Retry-After: 1`.
 3. Doorlist migrates in a separate PR after the Pelican API lands, under Doorlist's own spec and dependency controls.
-4. Lack of `Retry-After` prevents Pelican's default transport from retrying the completion-unknown 500, but cannot
-   stop a custom policy or caller. The default policy applies only when a caller opts into a retrying transport.
-   After the lease expires, replay is not guaranteed if completion did not commit.
+4. Status 500 prevents Pelican's default retry policy from retrying the completion-unknown response; `Retry-After`
+   does not decide status eligibility. A custom policy may retry it, and a lost transport response has no status to
+   inspect, so an opted-in transport may retry that failure. After lease expiry, replay is not guaranteed if
+   completion did not commit.
 5. The SPI break is deliberate: retaining bare compatibility methods would retain the hidden failure channel. The
    ABI change is recorded in the core slice and released only with the next major version.
+
+## Open questions
+
+None.
