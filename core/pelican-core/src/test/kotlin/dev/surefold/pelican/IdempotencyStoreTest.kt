@@ -1,6 +1,5 @@
 package dev.surefold.pelican
 
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
@@ -27,16 +26,21 @@ class IdempotencyStoreTest {
     private val ttl = Duration.ofHours(24)
     private val created = StoredResponse(201, listOf("Location" to "/orders/1"), "application/json", "{}".toByteArray())
 
+    private fun <A> StoreResult<A>.available(): A = when (this) {
+        is StoreResult.Available -> value
+        is StoreResult.Unavailable -> throw AssertionError("Store was unavailable", cause)
+    }
+
     @Test
     fun `the first request with a key reserves it`() {
-        store.reserve(scope, "fp-a", lease) shouldBe Reservation.Reserved
+        store.reserve(scope, "fp-a", lease).available() shouldBe Reservation.Reserved
     }
 
     @Test
     fun `a repeat while the first is running is told it is in flight`() {
         store.reserve(scope, "fp-a", lease)
 
-        store.reserve(scope, "fp-a", lease) shouldBe Reservation.InFlight
+        store.reserve(scope, "fp-a", lease).available() shouldBe Reservation.InFlight
     }
 
     @Test
@@ -44,7 +48,7 @@ class IdempotencyStoreTest {
         store.reserve(scope, "fp-a", lease)
         store.complete(scope, created, ttl)
 
-        val done = store.reserve(scope, "fp-a", lease).shouldBeInstanceOf<Reservation.Done>()
+        val done = store.reserve(scope, "fp-a", lease).available().shouldBeInstanceOf<Reservation.Done>()
         done.response.status shouldBe 201
         done.response.headers shouldBe listOf("Location" to "/orders/1")
         done.response.mediaType shouldBe "application/json"
@@ -54,18 +58,18 @@ class IdempotencyStoreTest {
     @Test
     fun `the same key for a different request is a mismatch whether or not the first has finished`() {
         store.reserve(scope, "fp-a", lease)
-        store.reserve(scope, "fp-b", lease) shouldBe Reservation.Mismatch
+        store.reserve(scope, "fp-b", lease).available() shouldBe Reservation.Mismatch
 
         store.complete(scope, created, ttl)
-        store.reserve(scope, "fp-b", lease) shouldBe Reservation.Mismatch
+        store.reserve(scope, "fp-b", lease).available() shouldBe Reservation.Mismatch
     }
 
     @Test
     fun `a key is scoped to its operation and its caller`() {
         store.reserve(scope, "fp-a", lease)
 
-        store.reserve(scope.copy(subject = "grace"), "fp-a", lease) shouldBe Reservation.Reserved
-        store.reserve(scope.copy(operation = "cancelOrder"), "fp-a", lease) shouldBe Reservation.Reserved
+        store.reserve(scope.copy(subject = "grace"), "fp-a", lease).available() shouldBe Reservation.Reserved
+        store.reserve(scope.copy(operation = "cancelOrder"), "fp-a", lease).available() shouldBe Reservation.Reserved
     }
 
     @Test
@@ -73,7 +77,7 @@ class IdempotencyStoreTest {
         store.reserve(scope, "fp-a", lease)
         store.release(scope)
 
-        store.reserve(scope, "fp-b", lease) shouldBe Reservation.Reserved
+        store.reserve(scope, "fp-b", lease).available() shouldBe Reservation.Reserved
     }
 
     @Test
@@ -82,7 +86,7 @@ class IdempotencyStoreTest {
         store.complete(scope, created, ttl)
         store.release(scope)
 
-        store.reserve(scope, "fp-a", lease).shouldBeInstanceOf<Reservation.Done>()
+        store.reserve(scope, "fp-a", lease).available().shouldBeInstanceOf<Reservation.Done>()
     }
 
     @Test
@@ -90,7 +94,7 @@ class IdempotencyStoreTest {
         store.reserve(scope, "fp-a", lease)
         clock.advance(lease.plusSeconds(1))
 
-        store.reserve(scope, "fp-a", lease) shouldBe Reservation.Reserved
+        store.reserve(scope, "fp-a", lease).available() shouldBe Reservation.Reserved
     }
 
     @Test
@@ -99,28 +103,30 @@ class IdempotencyStoreTest {
         store.complete(scope, created, ttl)
 
         clock.advance(ttl)
-        store.reserve(scope, "fp-a", lease).shouldBeInstanceOf<Reservation.Done>()
+        store.reserve(scope, "fp-a", lease).available().shouldBeInstanceOf<Reservation.Done>()
 
         clock.advance(Duration.ofSeconds(1))
-        store.lookup(scope).shouldBeNull()
-        store.reserve(scope, "fp-b", lease) shouldBe Reservation.Reserved
+        store.lookup(scope).available() shouldBe null
+        store.reserve(scope, "fp-b", lease).available() shouldBe Reservation.Reserved
     }
 
     @Test
     fun `lookup reports what is held without taking it`() {
-        store.lookup(scope).shouldBeNull()
+        store.lookup(scope).available() shouldBe null
 
         store.reserve(scope, "fp-a", lease)
-        store.lookup(scope) shouldBe Reservation.InFlight
-        store.reserve(scope, "fp-a", lease) shouldBe Reservation.InFlight
+        store.lookup(scope).available() shouldBe Reservation.InFlight
+        store.reserve(scope, "fp-a", lease).available() shouldBe Reservation.InFlight
 
         store.complete(scope, created, ttl)
-        store.lookup(scope).shouldBeInstanceOf<Reservation.Done>().response.status shouldBe 201
+        store.lookup(scope).available().shouldBeInstanceOf<Reservation.Done>().response.status shouldBe 201
     }
 
     @Test
     fun `of many concurrent requests with one key exactly one reserves it`() {
-        val answers = (1..64).toList().parallelStream().map { store.reserve(scope, "fp-a", lease) }.toList()
+        val answers = (1..64).toList().parallelStream().map {
+            store.reserve(scope, "fp-a", lease).available()
+        }.toList()
 
         answers.count { it == Reservation.Reserved } shouldBe 1
         answers.count { it == Reservation.InFlight } shouldBe 63

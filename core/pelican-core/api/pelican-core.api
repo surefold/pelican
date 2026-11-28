@@ -718,10 +718,10 @@ public final class dev/surefold/pelican/IdempotencyScope {
 }
 
 public abstract interface class dev/surefold/pelican/IdempotencyStore {
-	public abstract fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)V
-	public abstract fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/Reservation;
-	public abstract fun release (Ldev/surefold/pelican/IdempotencyScope;)V
-	public abstract fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/Reservation;
+	public abstract fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun release (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
 }
 
 public final class dev/surefold/pelican/Identity {
@@ -829,10 +829,10 @@ public final class dev/surefold/pelican/InMemoryIdempotencyStore : dev/surefold/
 	public fun <init> ()V
 	public fun <init> (Ljava/time/Clock;)V
 	public synthetic fun <init> (Ljava/time/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)V
-	public fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/Reservation;
-	public fun release (Ldev/surefold/pelican/IdempotencyScope;)V
-	public fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/Reservation;
+	public fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
+	public fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public fun release (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
 }
 
 public final class dev/surefold/pelican/InMemoryRateLimitStore : dev/surefold/pelican/RateLimitStore {
@@ -1928,6 +1928,31 @@ public final class dev/surefold/pelican/SseOutput : dev/surefold/pelican/Output 
 }
 
 public final class dev/surefold/pelican/SseOutput$Companion {
+}
+
+public abstract interface class dev/surefold/pelican/StoreResult {
+}
+
+public final class dev/surefold/pelican/StoreResult$Available : dev/surefold/pelican/StoreResult {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Ldev/surefold/pelican/StoreResult$Available;
+	public static synthetic fun copy$default (Ldev/surefold/pelican/StoreResult$Available;Ljava/lang/Object;ILjava/lang/Object;)Ldev/surefold/pelican/StoreResult$Available;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/surefold/pelican/StoreResult$Unavailable : dev/surefold/pelican/StoreResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Ldev/surefold/pelican/StoreResult$Unavailable;
+	public static synthetic fun copy$default (Ldev/surefold/pelican/StoreResult$Unavailable;Ljava/lang/Throwable;ILjava/lang/Object;)Ldev/surefold/pelican/StoreResult$Unavailable;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/surefold/pelican/StoredResponse {

@@ -114,6 +114,16 @@ class RefusalRendererTest {
         }
     }
 
+    @Test
+    fun `a described store failure remains available to backend reporting`() {
+        val raw = IdempotencyStoreFailure(503, "store_down", "Unavailable", cause = IllegalStateException(SECRET))
+        val rendered = renderError(raw, api = null)
+
+        rendered.error shouldBe ApiError(503, "store_down", "Unavailable")
+        rendered.unexpected shouldBe raw
+        (rendered.reference == null) shouldBe false
+    }
+
     /** Nothing the renderer does changes what a filter measuring the service is told. */
     @Test
     fun `the classified status is the same whichever dialect writes it`() {

@@ -3,6 +3,7 @@ package dev.surefold.pelican.jetty
 import dev.surefold.pelican.AdmissionDecision
 import dev.surefold.pelican.Api
 import dev.surefold.pelican.ApiBuilder
+import dev.surefold.pelican.ApiException
 import dev.surefold.pelican.Authenticator
 import dev.surefold.pelican.BodyCodec
 import dev.surefold.pelican.Codecs
@@ -17,6 +18,8 @@ import dev.surefold.pelican.RateLimitStore
 import dev.surefold.pelican.RefusalBody
 import dev.surefold.pelican.Reservation
 import dev.surefold.pelican.ServerEndpoint
+import dev.surefold.pelican.StoreResult
+import dev.surefold.pelican.StoredResponse
 import dev.surefold.pelican.Taken
 import dev.surefold.pelican.TenantDirectory
 import dev.surefold.pelican.TenantResolver
@@ -54,6 +57,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import java.io.IOException
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -122,6 +126,24 @@ class AdmissionJettyTest {
             world.events.count { it == "auth" } shouldBe native.count { it == "auth" }
             world.events.count { it == "handler" } shouldBe 1
             (world.events.indexOf("auth") < world.events.indexOf("body")) shouldBe true
+        }
+    }
+
+    @Test
+    fun `an unknown completion is the same nonretryable failure over Jetty`() {
+        listOf(false, true).forEach { reporterThrows ->
+            val world = AdmissionWorld().apply {
+                completionFailure = IOException("completion acknowledgement lost")
+                completionRetryAfter = "30"
+            }
+            world.service(null) {
+                if (reporterThrows) onError { _, _, _ -> throw ApiException(503, "reporter_down") }
+            }.admissionOverJetty { connector ->
+                val answer = connector.admissionExchange(world.valid)
+                answer.status shouldBe 500
+                answer.get("Retry-After").shouldBeNull()
+                answer.content shouldContain "idempotency_completion_unknown"
+            }
         }
     }
 
@@ -364,6 +386,8 @@ internal class AdmissionWorld {
     val events = mutableListOf<String>()
     var poison = false
     var identity: Identity? = Identity("synthetic")
+    var completionFailure: Throwable? = null
+    var completionRetryAfter: String? = null
     private val scheme = bearerAuth()
     private val caller = authenticated(scheme) { it.subject }
     private val tenant = tenantFrom(TenantResolver { mark("tenant"); "one" })
@@ -391,6 +415,7 @@ internal class AdmissionWorld {
             listOf(
                 ServerEndpoint(operation) { p ->
                     mark("handler")
+                    completionRetryAfter?.let { p.setRawHeader("Retry-After", it) }
                     CompletableFuture.completedFuture("${p[id]}/${p[number]}/${p[payload]}")
                 },
             ),
@@ -411,9 +436,20 @@ internal class AdmissionWorld {
             tenants(tenant, TenantDirectory { mark("directory"); true }, claim = null)
             rateLimits(RateLimitStore { _, _, _ -> mark("quota"); Taken.Allowed(1) })
             idempotency(object : IdempotencyStore by memory {
-                override fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): Reservation {
+                override fun reserve(
+                    scope: IdempotencyScope,
+                    fingerprint: String,
+                    lease: Duration,
+                ): StoreResult<Reservation> {
                     mark("reservation"); return memory.reserve(scope, fingerprint, lease)
                 }
+
+                override fun complete(
+                    scope: IdempotencyScope,
+                    response: StoredResponse,
+                    ttl: Duration,
+                ): StoreResult<Unit> = completionFailure?.let { StoreResult.Unavailable(it) }
+                    ?: memory.complete(scope, response, ttl)
             })
             filter(before { mark("filter") })
             onRefusal { _, _, _ -> events += "observer" }

@@ -233,7 +233,11 @@ class AdmissionInMemoryTest {
             tenants(tenant, TenantDirectory { mark("directory"); true }, claim = null)
             rateLimits(RateLimitStore { _, _, _ -> mark("quota"); Taken.Allowed(1) })
             idempotency(object : IdempotencyStore by memory {
-                override fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): Reservation {
+                override fun reserve(
+                    scope: IdempotencyScope,
+                    fingerprint: String,
+                    lease: Duration,
+                ): StoreResult<Reservation> {
                     mark("reservation"); return memory.reserve(scope, fingerprint, lease)
                 }
             })

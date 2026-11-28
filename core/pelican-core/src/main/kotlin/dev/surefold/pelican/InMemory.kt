@@ -304,7 +304,11 @@ class InMemoryClientTransport(private val api: Api) : ClientTransport {
         val rendered = renderError(raw, api, endpoint)
         rendered.unexpected?.let { failure ->
             val reference = checkNotNull(rendered.reference) { "an unexpected failure with no reference" }
-            api.onServerError?.invoke(reference, endpoint, failure)
+            try {
+                api.onServerError?.invoke(reference, endpoint, failure)
+            } catch (reporting: RuntimeException) {
+                failure.addSuppressed(reporting)
+            }
         }
         return refusalBody(rendered.error.status, rendered.body).plus(rendered.headers)
     }

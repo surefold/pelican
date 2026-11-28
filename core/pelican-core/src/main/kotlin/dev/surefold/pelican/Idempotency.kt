@@ -70,6 +70,10 @@ private const val IN_FLIGHT_STATUS = 409
 private const val IN_FLIGHT_TAG = "idempotency_key_in_flight"
 private const val REUSED_STATUS = 422
 private const val REUSED_TAG = "idempotency_key_reused"
+private const val STORE_UNAVAILABLE_STATUS = 503
+private const val STORE_UNAVAILABLE_TAG = "idempotency_store_unavailable"
+private const val COMPLETION_UNKNOWN_STATUS = 500
+private const val COMPLETION_UNKNOWN_TAG = "idempotency_completion_unknown"
 
 /** Where the refusal envelope writes its reason: `ApiError.error`. */
 private const val REFUSAL_REASON_FIELD = "error"
@@ -116,6 +120,20 @@ sealed interface Reservation {
     }
 }
 
+/** A blocking store call either answered with [Available.value], or could not determine its outcome. */
+sealed interface StoreResult<out A> {
+    data class Available<A>(val value: A) : StoreResult<A>
+    data class Unavailable(val cause: Throwable) : StoreResult<Nothing>
+}
+
+internal class IdempotencyStoreFailure(
+    val status: Int,
+    val tag: String,
+    val detail: String,
+    val headers: List<Pair<String, String>> = emptyList(),
+    cause: Throwable,
+) : RuntimeException(tag, cause)
+
 /**
  * Where idempotency keys and the responses they answered are kept. Pelican holds none itself, so a service picks
  * where they live; [InMemoryIdempotencyStore] is the one for tests.
@@ -128,16 +146,16 @@ interface IdempotencyStore {
      * Takes [scope] for a request whose fingerprint is [fingerprint], or says why not. A reservation never completed
      * is given up after [lease], so a node that died mid-request does not hold its key until the ttl.
      */
-    fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): Reservation
+    fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): StoreResult<Reservation>
 
     /** Keeps [response] for [ttl], answered to every repeat of the request that reserved [scope]. */
-    fun complete(scope: IdempotencyScope, response: StoredResponse, ttl: Duration)
+    fun complete(scope: IdempotencyScope, response: StoredResponse, ttl: Duration): StoreResult<Unit>
 
     /** What is held under [scope] without taking it: [Reservation.InFlight], [Reservation.Done] or null. */
-    fun lookup(scope: IdempotencyScope): Reservation?
+    fun lookup(scope: IdempotencyScope): StoreResult<Reservation?>
 
     /** Gives up a reservation that was never completed, so a retry runs the handler again. A completed one stays. */
-    fun release(scope: IdempotencyScope)
+    fun release(scope: IdempotencyScope): StoreResult<Unit>
 }
 
 /**
@@ -150,7 +168,7 @@ class InMemoryIdempotencyStore(private val clock: Clock = Clock.systemUTC()) : I
 
     private val entries = ConcurrentHashMap<IdempotencyScope, Entry>()
 
-    override fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): Reservation {
+    override fun reserve(scope: IdempotencyScope, fingerprint: String, lease: Duration): StoreResult<Reservation> {
         val now = clock.instant()
         var answer: Reservation = Reservation.Reserved
         // compute holds the key's bin for the whole decision, which is the atomicity the interface promises.
@@ -164,26 +182,29 @@ class InMemoryIdempotencyStore(private val clock: Clock = Clock.systemUTC()) : I
             }
             if (answer == Reservation.Reserved) Entry(fingerprint, now.plus(lease), null) else live
         }
-        return answer
+        return StoreResult.Available(answer)
     }
 
-    override fun complete(scope: IdempotencyScope, response: StoredResponse, ttl: Duration) {
+    override fun complete(scope: IdempotencyScope, response: StoredResponse, ttl: Duration): StoreResult<Unit> {
         val until = clock.instant().plus(ttl)
         entries.compute(scope) { _, held -> Entry(held?.fingerprint.orEmpty(), until, response) }
+        return StoreResult.Available(Unit)
     }
 
-    override fun lookup(scope: IdempotencyScope): Reservation? {
+    override fun lookup(scope: IdempotencyScope): StoreResult<Reservation?> {
         val now = clock.instant()
         val live = entries.computeIfPresent(scope) { _, held -> held.takeUnless { now.isAfter(it.until) } }
-        return when {
+        val answer = when {
             live == null -> null
             live.response == null -> Reservation.InFlight
             else -> Reservation.Done(live.response)
         }
+        return StoreResult.Available(answer)
     }
 
-    override fun release(scope: IdempotencyScope) {
+    override fun release(scope: IdempotencyScope): StoreResult<Unit> {
         entries.computeIfPresent(scope) { _, held -> held.takeIf { it.response != null } }
+        return StoreResult.Available(Unit)
     }
 }
 
@@ -212,15 +233,36 @@ internal fun Api.keyed(
         } else {
             val tenant = endpoint.tenant?.let { params[it].id }
             val scope = IdempotencyScope(endpoint.operationName, subjectOf(endpoint, params), sent, tenant)
-            when (val held = store.reserve(scope, responses.fingerprint(params, key), settings.lease)) {
+            val held = when (val result = store.reserve(scope, responses.fingerprint(params, key), settings.lease)) {
+                is StoreResult.Available -> result.value
+                is StoreResult.Unavailable -> throw storeUnavailable(result.cause)
+            }
+            when (held) {
                 Reservation.Reserved -> {
                     // What a filter set before the handler ran, a request id say, belongs to this request alone.
                     val setByFilters = params.responseHeaders()
-                    attempt(params, invoke).whenComplete { result, failure ->
+                    attempt(params, invoke).handle { result, failure ->
                         if (failure == null) {
-                            store.complete(scope, responses.kept(params, result, setByFilters), settings.ttl)
+                            when (val completion = store.complete(
+                                scope,
+                                responses.kept(params, result, setByFilters),
+                                settings.ttl,
+                            )) {
+                                is StoreResult.Available -> result
+                                is StoreResult.Unavailable -> throw completionUnknown(
+                                    params,
+                                    completion.cause,
+                                )
+                            }
                         } else {
-                            store.release(scope)
+                            when (val release = store.release(scope)) {
+                                is StoreResult.Available -> throw failure
+                                is StoreResult.Unavailable -> throw completionUnknown(
+                                    params,
+                                    release.cause,
+                                    failure,
+                                )
+                            }
                         }
                     }
                 }
@@ -238,6 +280,31 @@ internal fun Api.keyed(
             }
         }
     }
+}
+
+private fun storeUnavailable(cause: Throwable): IdempotencyStoreFailure =
+    IdempotencyStoreFailure(
+        STORE_UNAVAILABLE_STATUS,
+        STORE_UNAVAILABLE_TAG,
+        "The idempotency store could not answer. Retry after the time given.",
+        headers = listOf("Retry-After" to IN_FLIGHT_RETRY_SECONDS),
+        cause = cause,
+    )
+
+private fun completionUnknown(
+    params: Params,
+    cause: Throwable,
+    handlerFailure: Throwable? = null,
+): IdempotencyStoreFailure {
+    params.removeResponseHeader("Retry-After")
+    val failure = IdempotencyStoreFailure(
+        COMPLETION_UNKNOWN_STATUS,
+        COMPLETION_UNKNOWN_TAG,
+        "The handler ran, but its response may not have been stored. Do not automatically retry.",
+        cause = cause,
+    )
+    handlerFailure?.let { failure.addSuppressed(unwrapCompletion(it)) }
+    return failure
 }
 
 /**
