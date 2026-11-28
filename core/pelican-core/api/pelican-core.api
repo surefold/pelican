@@ -1930,15 +1930,6 @@ public final class dev/surefold/pelican/SseOutput : dev/surefold/pelican/Output 
 public final class dev/surefold/pelican/SseOutput$Companion {
 }
 
-public final class dev/surefold/pelican/StoredResponse {
-	public fun <init> (ILjava/util/List;Ljava/lang/String;[B)V
-	public final fun getBody ()[B
-	public final fun getHeaders ()Ljava/util/List;
-	public final fun getMediaType ()Ljava/lang/String;
-	public final fun getStatus ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public abstract interface class dev/surefold/pelican/StoreResult {
 }
 
@@ -1961,6 +1952,15 @@ public final class dev/surefold/pelican/StoreResult$Unavailable : dev/surefold/p
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCause ()Ljava/lang/Throwable;
 	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/surefold/pelican/StoredResponse {
+	public fun <init> (ILjava/util/List;Ljava/lang/String;[B)V
+	public final fun getBody ()[B
+	public final fun getHeaders ()Ljava/util/List;
+	public final fun getMediaType ()Ljava/lang/String;
+	public final fun getStatus ()I
 	public fun toString ()Ljava/lang/String;
 }
 
