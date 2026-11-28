@@ -7,6 +7,7 @@ import dev.surefold.pelican.ApiException
 import dev.surefold.pelican.BodyDecodeFailure
 import dev.surefold.pelican.DecodeFailure
 import dev.surefold.pelican.Endpoint
+import dev.surefold.pelican.IdempotencyStoreFailure
 import dev.surefold.pelican.NotAcceptable
 import dev.surefold.pelican.PayloadTooLarge
 import dev.surefold.pelican.Refusal
@@ -24,7 +25,7 @@ import dev.surefold.pelican.unwrapCompletion
 class RenderedError(
     val error: ApiError,
     val headers: List<Pair<String, String>>,
-    /** Non-null when this was a 500 nobody described. Log it. */
+    /** Non-null when the classified failure still needs reporting. */
     val unexpected: Throwable?,
     /** The id printed in the response body, to grep the log for. */
     val reference: String?,
@@ -51,6 +52,7 @@ class RenderedError(
  */
 private fun described(t: Throwable): ApiError? = when (t) {
     is ApiException -> ApiError(t.status, t.message, t.detail)
+    is IdempotencyStoreFailure -> ApiError(t.status, t.tag, t.detail)
     is Unrouted -> ApiError(t.status, t.message, t.detail)
     is DecodeFailure -> ApiError(400, "Invalid parameter", t.message)
     is BodyDecodeFailure -> ApiError(400, "Malformed request body", t.message)
@@ -126,7 +128,11 @@ fun renderError(raw: Throwable, api: Api?, endpoint: Endpoint<*, *>? = null): Re
         classified.error,
         // Only an ApiException carries headers of its own; the rest are raised
         // where no response was being described.
-        if (t is ApiException) t.headers else emptyList(),
+        when (t) {
+            is ApiException -> t.headers
+            is IdempotencyStoreFailure -> t.headers
+            else -> emptyList()
+        },
         classified.unexpected,
         classified.reference,
         body = renderer.bodyFor(classified.error.refusal(classified.reference, template)),
@@ -156,6 +162,9 @@ private const val UNAUTHENTICATED_STATUS = 401
 
 private fun classify(t: Throwable, api: Api?): ClassifiedError {
     val described = described(t)
+    if (t is IdempotencyStoreFailure) {
+        return ClassifiedError(checkNotNull(described), unexpected = t, reference = newReference())
+    }
     if (described != null) return ClassifiedError(described, unexpected = null, reference = null)
 
     val reference = newReference()

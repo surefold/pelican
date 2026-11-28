@@ -1,7 +1,6 @@
 package dev.surefold.pelican
 
 import dev.surefold.pelican.spi.failureNamedBy
-import dev.surefold.pelican.spi.newReference
 import dev.surefold.pelican.spi.successNamedBy
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
@@ -127,6 +126,14 @@ sealed interface StoreResult<out A> {
     data class Unavailable(val cause: Throwable) : StoreResult<Nothing>
 }
 
+internal class IdempotencyStoreFailure(
+    val status: Int,
+    val tag: String,
+    val detail: String,
+    val headers: List<Pair<String, String>> = emptyList(),
+    cause: Throwable,
+) : RuntimeException(tag, cause)
+
 /**
  * Where idempotency keys and the responses they answered are kept. Pelican holds none itself, so a service picks
  * where they live; [InMemoryIdempotencyStore] is the one for tests.
@@ -228,7 +235,7 @@ internal fun Api.keyed(
             val scope = IdempotencyScope(endpoint.operationName, subjectOf(endpoint, params), sent, tenant)
             val held = when (val result = store.reserve(scope, responses.fingerprint(params, key), settings.lease)) {
                 is StoreResult.Available -> result.value
-                is StoreResult.Unavailable -> throw storeUnavailable(endpoint, result.cause)
+                is StoreResult.Unavailable -> throw storeUnavailable(result.cause)
             }
             when (held) {
                 Reservation.Reserved -> {
@@ -243,7 +250,7 @@ internal fun Api.keyed(
                             )) {
                                 is StoreResult.Available -> result
                                 is StoreResult.Unavailable -> throw completionUnknown(
-                                    endpoint,
+                                    params,
                                     completion.cause,
                                 )
                             }
@@ -251,7 +258,7 @@ internal fun Api.keyed(
                             when (val release = store.release(scope)) {
                                 is StoreResult.Available -> throw failure
                                 is StoreResult.Unavailable -> throw completionUnknown(
-                                    endpoint,
+                                    params,
                                     release.cause,
                                     failure,
                                 )
@@ -275,30 +282,28 @@ internal fun Api.keyed(
     }
 }
 
-private fun Api.storeUnavailable(endpoint: Endpoint<*, *>, cause: Throwable): ApiException {
-    onServerError?.invoke(newReference(), endpoint, cause)
-    return ApiException(
+private fun storeUnavailable(cause: Throwable): IdempotencyStoreFailure =
+    IdempotencyStoreFailure(
         STORE_UNAVAILABLE_STATUS,
         STORE_UNAVAILABLE_TAG,
         "The idempotency store could not answer. Retry after the time given.",
         headers = listOf("Retry-After" to IN_FLIGHT_RETRY_SECONDS),
         cause = cause,
     )
-}
 
-private fun Api.completionUnknown(
-    endpoint: Endpoint<*, *>,
+private fun completionUnknown(
+    params: Params,
     cause: Throwable,
     handlerFailure: Throwable? = null,
-): ApiException {
-    val failure = ApiException(
+): IdempotencyStoreFailure {
+    params.removeResponseHeader("Retry-After")
+    val failure = IdempotencyStoreFailure(
         COMPLETION_UNKNOWN_STATUS,
         COMPLETION_UNKNOWN_TAG,
         "The handler ran, but its response may not have been stored. Do not automatically retry.",
         cause = cause,
     )
     handlerFailure?.let { failure.addSuppressed(unwrapCompletion(it)) }
-    onServerError?.invoke(newReference(), endpoint, failure)
     return failure
 }
 

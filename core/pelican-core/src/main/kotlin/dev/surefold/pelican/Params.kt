@@ -179,6 +179,11 @@ class Params(
     fun responseHeaders(): List<Pair<String, String>> =
         outgoing?.map { it.key to it.value }.orEmpty() + repeated?.values.orEmpty()
 
+    internal fun removeResponseHeader(name: String) {
+        outgoing?.keys?.removeAll { it.equals(name, ignoreCase = true) }
+        repeated?.entries?.removeAll { (_, header) -> header.first.equals(name, ignoreCase = true) }
+    }
+
     /**
      * The headers a required declaration promised but nobody set. Not policed —
      * failing the response would replace a wrong header with a 500 — but a

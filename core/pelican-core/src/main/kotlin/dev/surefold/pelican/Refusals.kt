@@ -17,7 +17,7 @@ class Refusal(
     /** The short sentence: "Malformed request body", "Not acceptable". */
     val reason: String,
     val detail: String?,
-    /** Set on a 500 nobody described — the id the log line carries. */
+    /** The id carried by the corresponding server-error report, where there is one. */
     val reference: String?,
     /** The matched route's template, or null where nothing matched. */
     val pathTemplate: String?,

@@ -263,8 +263,16 @@ internal fun errorResponse(raw: Throwable, api: Api, endpoint: Endpoint<*, *>? =
         // renderError produced it for.
         val reference = checkNotNull(rendered.reference) { "an unexpected failure with no reference" }
         val hook = api.onServerError
-        if (hook != null) hook(reference, endpoint, failure)
-        else log.error("Unhandled failure in {} [ref {}]", endpoint ?: "?", rendered.reference, failure)
+        if (hook == null) {
+            log.error("Unhandled failure in {} [ref {}]", endpoint ?: "?", reference, failure)
+        } else {
+            try {
+                hook(reference, endpoint, failure)
+            } catch (@Suppress("TooGenericExceptionCaught") reporting: Throwable) {
+                failure.addSuppressed(reporting)
+                log.error("Failure reporter failed in {} [ref {}]", endpoint ?: "?", reference, failure)
+            }
+        }
     }
 
     return HttpResponse.create()

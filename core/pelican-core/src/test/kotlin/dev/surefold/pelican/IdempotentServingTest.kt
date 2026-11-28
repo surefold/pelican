@@ -57,7 +57,10 @@ class IdempotentServingTest {
         val n = calls.incrementAndGet()
         when (p[order]) {
             "boom" -> error("the warehouse is on fire")
-            "retryable" -> throw ApiException(503, "try_again", "the warehouse may have committed the order")
+            "retryable" -> {
+                p.setRawHeader("Retry-After", "30")
+                throw ApiException(503, "try_again", "the warehouse may have committed the order")
+            }
 
             "gone" -> CompletableFuture.completedFuture(soldOut("no more ${p[order]}"))
 
@@ -81,11 +84,17 @@ class IdempotentServingTest {
     private fun transportWith(
         store: IdempotencyStore,
         errors: MutableList<Throwable>? = null,
+        reportingFailure: RuntimeException? = null,
     ) = InMemoryClientTransport(
         api(listOf(placeOrderHandler, tipHandler), codecs = Strings) {
             authenticate(bearer) { c -> c.bearerToken()?.let { Identity(it) } }
             idempotency(store)
-            errors?.let { found -> onError { _, _, error -> found += error } }
+            errors?.let { found ->
+                onError { _, _, error ->
+                    found += error
+                    reportingFailure?.let { throw it }
+                }
+            }
             filter { params, next ->
                 // Declared on the endpoint, so only when it was set tells it apart from the handler's own.
                 if (params.endpoint === placeOrder) params.setHeader(requestId, "req-${requests.incrementAndGet()}")
@@ -213,7 +222,7 @@ class IdempotentServingTest {
         response.header("Retry-After") shouldBe "1"
         response.text() shouldContain "idempotency_store_unavailable"
         calls.get() shouldBe 0
-        errors shouldContainExactly listOf(failure)
+        errors.single().cause shouldBe failure
     }
 
     @Test
@@ -253,7 +262,7 @@ class IdempotentServingTest {
         val unavailable = object : IdempotencyStore by memory {
             override fun release(scope: IdempotencyScope): StoreResult<Unit> = StoreResult.Unavailable(failure)
         }
-        val client = transportWith(unavailable, errors)
+        val client = transportWith(unavailable, errors, ApiException(503, "reporter_down"))
 
         val response = send("retryable", client = client)
 
@@ -263,7 +272,8 @@ class IdempotentServingTest {
         send("retryable", client = client).status shouldBe 409
         val reported = errors.single()
         reported.cause shouldBe failure
-        reported.suppressed.single().shouldBeInstanceOf<ApiException>().status shouldBe 503
+        reported.suppressed.map { it.shouldBeInstanceOf<ApiException>().message } shouldContainExactly
+            listOf("try_again", "reporter_down")
         calls.get() shouldBe 1
     }
 
