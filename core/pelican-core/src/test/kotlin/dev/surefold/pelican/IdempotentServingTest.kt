@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 import java.io.IOException
+import java.time.Duration
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KType
@@ -55,6 +56,7 @@ class IdempotentServingTest {
         val n = calls.incrementAndGet()
         when (p[order]) {
             "boom" -> error("the warehouse is on fire")
+            "retryable" -> throw ApiException(503, "try_again", "the warehouse may have committed the order")
 
             "gone" -> CompletableFuture.completedFuture(soldOut("no more ${p[order]}"))
 
@@ -75,10 +77,14 @@ class IdempotentServingTest {
 
     private val requests = AtomicInteger()
 
-    private val transport = InMemoryClientTransport(
+    private fun transportWith(
+        store: IdempotencyStore,
+        errors: MutableList<Throwable>? = null,
+    ) = InMemoryClientTransport(
         api(listOf(placeOrderHandler, tipHandler), codecs = Strings) {
             authenticate(bearer) { c -> c.bearerToken()?.let { Identity(it) } }
             idempotency(store)
+            errors?.let { found -> onError { _, _, error -> found += error } }
             filter { params, next ->
                 // Declared on the endpoint, so only when it was set tells it apart from the handler's own.
                 if (params.endpoint === placeOrder) params.setHeader(requestId, "req-${requests.incrementAndGet()}")
@@ -87,11 +93,14 @@ class IdempotentServingTest {
         },
     )
 
+    private val transport = transportWith(store)
+
     private fun sendAsync(
         body: String,
         key: String? = "k-1",
         who: String = "ada",
         path: String = "orders",
+        client: ClientTransport = transport,
     ): CompletableFuture<ClientResponse> {
         val headers = listOfNotNull(
             key?.let { "Idempotency-Key" to it },
@@ -99,11 +108,16 @@ class IdempotentServingTest {
             "Content-Type" to "application/json",
         )
         val request = ClientRequest(Method.POST, "http://shop.test/$path", headers, ClientRequest.Body.Text(body))
-        return transport.send(request).toCompletableFuture()
+        return client.send(request).toCompletableFuture()
     }
 
-    private fun send(body: String, key: String? = "k-1", who: String = "ada", path: String = "orders") =
-        sendAsync(body, key, who, path).join()
+    private fun send(
+        body: String,
+        key: String? = "k-1",
+        who: String = "ada",
+        path: String = "orders",
+        client: ClientTransport = transport,
+    ) = sendAsync(body, key, who, path, client).join()
 
     @Test
     fun `a repeat is answered with the first response and the handler runs once`() {
@@ -178,6 +192,78 @@ class IdempotentServingTest {
         send("boom").status shouldBe 500
 
         calls.get() shouldBe 2
+    }
+
+    @Test
+    fun `an unavailable reservation is a retryable 503 and the handler does not run`() {
+        val failure = IOException("idempotency database unavailable")
+        val errors = mutableListOf<Throwable>()
+        val unavailable = object : IdempotencyStore by store {
+            override fun reserve(
+                scope: IdempotencyScope,
+                fingerprint: String,
+                lease: Duration,
+            ): StoreResult<Reservation> = StoreResult.Unavailable(failure)
+        }
+
+        val response = send("tea", client = transportWith(unavailable, errors))
+
+        response.status shouldBe 503
+        response.header("Retry-After") shouldBe "1"
+        response.text() shouldContain "idempotency_store_unavailable"
+        calls.get() shouldBe 0
+        errors shouldContainExactly listOf(failure)
+    }
+
+    @Test
+    fun `an unavailable completion is a nonretryable 500 and leaves the store state untouched`() {
+        listOf(false, true).forEach { committed ->
+            val memory = InMemoryIdempotencyStore()
+            val failure = IOException("completion acknowledgement lost")
+            val unavailable = object : IdempotencyStore by memory {
+                override fun complete(
+                    scope: IdempotencyScope,
+                    response: StoredResponse,
+                    ttl: Duration,
+                ): StoreResult<Unit> {
+                    if (committed) memory.complete(scope, response, ttl)
+                    return StoreResult.Unavailable(failure)
+                }
+            }
+            val client = transportWith(unavailable)
+
+            val first = send("tea", key = "complete-$committed", client = client)
+            val repeat = send("tea", key = "complete-$committed", client = client)
+
+            first.status shouldBe 500
+            first.header("Retry-After") shouldBe null
+            first.text() shouldContain "idempotency_completion_unknown"
+            repeat.status shouldBe if (committed) 201 else 409
+            repeat.header("Idempotent-Replayed") shouldBe if (committed) "true" else null
+        }
+        calls.get() shouldBe 2
+    }
+
+    @Test
+    fun `an unavailable release replaces a retryable handler failure and keeps both causes`() {
+        val memory = InMemoryIdempotencyStore()
+        val failure = IOException("release acknowledgement lost")
+        val errors = mutableListOf<Throwable>()
+        val unavailable = object : IdempotencyStore by memory {
+            override fun release(scope: IdempotencyScope): StoreResult<Unit> = StoreResult.Unavailable(failure)
+        }
+        val client = transportWith(unavailable, errors)
+
+        val response = send("retryable", client = client)
+
+        response.status shouldBe 500
+        response.header("Retry-After") shouldBe null
+        response.text() shouldContain "idempotency_completion_unknown"
+        send("retryable", client = client).status shouldBe 409
+        val reported = errors.single()
+        reported.cause shouldBe failure
+        reported.suppressed.single().shouldBeInstanceOf<ApiException>().status shouldBe 503
+        calls.get() shouldBe 1
     }
 
     @Test

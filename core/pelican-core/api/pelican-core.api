@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 33158)
+Total output lines: 2303
+
 public abstract interface class dev/surefold/pelican/AdmissionDecision {
 }
 
@@ -718,10 +721,10 @@ public final class dev/surefold/pelican/IdempotencyScope {
 }
 
 public abstract interface class dev/surefold/pelican/IdempotencyStore {
-	public abstract fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)V
-	public abstract fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/Reservation;
-	public abstract fun release (Ldev/surefold/pelican/IdempotencyScope;)V
-	public abstract fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/Reservation;
+	public abstract fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun release (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public abstract fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
 }
 
 public final class dev/surefold/pelican/Identity {
@@ -829,10 +832,10 @@ public final class dev/surefold/pelican/InMemoryIdempotencyStore : dev/surefold/
 	public fun <init> ()V
 	public fun <init> (Ljava/time/Clock;)V
 	public synthetic fun <init> (Ljava/time/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)V
-	public fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/Reservation;
-	public fun release (Ldev/surefold/pelican/IdempotencyScope;)V
-	public fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/Reservation;
+	public fun complete (Ldev/surefold/pelican/IdempotencyScope;Ldev/surefold/pelican/StoredResponse;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
+	public fun lookup (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public fun release (Ldev/surefold/pelican/IdempotencyScope;)Ldev/surefold/pelican/StoreResult;
+	public fun reserve (Ldev/surefold/pelican/IdempotencyScope;Ljava/lang/String;Ljava/time/Duration;)Ldev/surefold/pelican/StoreResult;
 }
 
 public final class dev/surefold/pelican/InMemoryRateLimitStore : dev/surefold/pelican/RateLimitStore {
@@ -1050,243 +1053,7 @@ public final class dev/surefold/pelican/ListStyle : java/lang/Enum {
 	public static final field SPACE Ldev/surefold/pelican/ListStyle;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getExplode ()Z
-	public final fun getSeparator ()Ljava/lang/Character;
-	public final fun styleAt (Ljava/lang/String;)Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Ldev/surefold/pelican/ListStyle;
-	public static fun values ()[Ldev/surefold/pelican/ListStyle;
-}
-
-public final class dev/surefold/pelican/LocalDateCodec : dev/surefold/pelican/PlainCodec {
-	public static final field INSTANCE Ldev/surefold/pelican/LocalDateCodec;
-	public synthetic fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;
-	public fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/time/LocalDate;
-	public fun getExample ()Ljava/lang/String;
-	public fun getOpenApiFormat ()Ljava/lang/String;
-	public fun getOpenApiType ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/LocalDateTimeCodec : dev/surefold/pelican/PlainCodec {
-	public static final field INSTANCE Ldev/surefold/pelican/LocalDateTimeCodec;
-	public synthetic fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;
-	public fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/time/LocalDateTime;
-	public fun getExample ()Ljava/lang/String;
-	public fun getOpenApiFormat ()Ljava/lang/String;
-	public fun getOpenApiType ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/LongCodec : dev/surefold/pelican/PlainCodec {
-	public static final field INSTANCE Ldev/surefold/pelican/LongCodec;
-	public fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Long;
-	public synthetic fun decode (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;
-	public fun getOpenApiFormat ()Ljava/lang/String;
-	public fun getOpenApiType ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/MediaOutput : dev/surefold/pelican/Output {
-	public fun <init> (ILjava/lang/String;Lkotlin/reflect/KType;Ljava/util/List;Ljava/lang/String;)V
-	public synthetic fun <init> (ILjava/lang/String;Lkotlin/reflect/KType;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getDescription ()Ljava/lang/String;
-	public fun getHeaders ()Ljava/util/List;
-	public fun getMediaType ()Ljava/lang/String;
-	public fun getPayloadType ()Lkotlin/reflect/KType;
-	public fun getStatus ()I
-	public final fun getType ()Lkotlin/reflect/KType;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/Method : java/lang/Enum {
-	public static final field DELETE Ldev/surefold/pelican/Method;
-	public static final field GET Ldev/surefold/pelican/Method;
-	public static final field HEAD Ldev/surefold/pelican/Method;
-	public static final field OPTIONS Ldev/surefold/pelican/Method;
-	public static final field PATCH Ldev/surefold/pelican/Method;
-	public static final field POST Ldev/surefold/pelican/Method;
-	public static final field PUT Ldev/surefold/pelican/Method;
-	public static final field QUERY Ldev/surefold/pelican/Method;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Ldev/surefold/pelican/Method;
-	public static fun values ()[Ldev/surefold/pelican/Method;
-}
-
-public final class dev/surefold/pelican/MultiKt {
-	public static final fun decodeAll (Ldev/surefold/pelican/PlainCodec;Ljava/lang/String;Ldev/surefold/pelican/ListStyle;Ljava/util/List;)Ljava/util/List;
-	public static final fun defaultExplodeFor (Ljava/lang/String;)Z
-	public static final fun defaultStyleAt (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun encodeAll (Ldev/surefold/pelican/PlainCodec;Ljava/lang/String;Ldev/surefold/pelican/ListStyle;Ljava/util/List;)Ljava/util/List;
-	public static final fun listSchema (Ldev/surefold/pelican/PlainCodec;)Ldev/surefold/pelican/JsonObj;
-}
-
-public final class dev/surefold/pelican/MultipartBody : dev/surefold/pelican/BodyInput {
-	public final fun getBufferedFileParts ()Ljava/util/List;
-	public fun getDescription ()Ljava/lang/String;
-	public final fun getFileParts ()Ljava/util/List;
-	public final fun getParts ()Ljava/util/List;
-	public final fun getPartsInWireOrder ()Ljava/util/List;
-	public final fun getStreamedFilePart ()Ldev/surefold/pelican/FilePart;
-	public final fun getTextParts ()Ljava/util/List;
-	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class dev/surefold/pelican/MultipartPart : dev/surefold/pelican/ParamKey {
-	public abstract fun getDescription ()Ljava/lang/String;
-	public abstract fun getName ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NdjsonBody : dev/surefold/pelican/BodyInput {
-	public fun <init> (Lkotlin/reflect/KType;Ljava/lang/String;)V
-	public fun getDescription ()Ljava/lang/String;
-	public final fun getType ()Lkotlin/reflect/KType;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NdjsonOutput : dev/surefold/pelican/Output {
-	public fun <init> (ILkotlin/reflect/KType;Ljava/lang/String;)V
-	public synthetic fun <init> (ILkotlin/reflect/KType;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun frame (Ldev/surefold/pelican/BodyCodec;Ljava/lang/Object;)Ljava/lang/String;
-	public fun getDescription ()Ljava/lang/String;
-	public fun getMediaType ()Ljava/lang/String;
-	public fun getPayloadType ()Lkotlin/reflect/KType;
-	public fun getStatus ()I
-	public final fun getType ()Lkotlin/reflect/KType;
-}
-
-public final class dev/surefold/pelican/NegotiatedBody : dev/surefold/pelican/BodyInput {
-	public final fun getAlternatives ()Ljava/util/List;
-	public fun getDescription ()Ljava/lang/String;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NegotiatedOutput : dev/surefold/pelican/Output {
-	public final fun getAlternatives ()Ljava/util/List;
-	public fun getDescription ()Ljava/lang/String;
-	public fun getMediaType ()Ljava/lang/String;
-	public fun getPayloadType ()Lkotlin/reflect/KType;
-	public fun getProduces ()Ljava/util/Set;
-	public fun getStatus ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NoCodecs : dev/surefold/pelican/Codecs {
-	public static final field INSTANCE Ldev/surefold/pelican/NoCodecs;
-	public fun codec (Lkotlin/reflect/KType;)Ldev/surefold/pelican/BodyCodec;
-	public fun schema (Lkotlin/reflect/KType;Ldev/surefold/pelican/SchemaComponents;)Ldev/surefold/pelican/JsonObj;
-}
-
-public final class dev/surefold/pelican/NonEmptyString {
-	public static final field Companion Ldev/surefold/pelican/NonEmptyString$Companion;
-	public static final synthetic fun box-impl (Ljava/lang/String;)Ldev/surefold/pelican/NonEmptyString;
-	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
-	public final fun getValue ()Ljava/lang/String;
-	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/lang/String;)I
-	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NonEmptyString$Companion {
-	public final fun of-BuEuL8U (Ljava/lang/String;)Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/NotAcceptable : java/lang/RuntimeException {
-	public fun <init> (Ljava/util/Set;)V
-	public final fun getProduced ()Ljava/util/Set;
-}
-
-public final class dev/surefold/pelican/OAuth2Scheme : dev/surefold/pelican/SecurityScheme {
-	public fun getDeclaredScopes ()Ljava/util/Set;
-	public fun getDescription ()Ljava/lang/String;
-	public final fun getFlows ()Ljava/util/List;
-	public fun getName ()Ljava/lang/String;
-}
-
-public abstract class dev/surefold/pelican/OAuthFlow {
-	public synthetic fun <init> (Ljava/util/Map;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getScopes ()Ljava/util/Map;
-}
-
-public final class dev/surefold/pelican/OAuthFlow$AuthorizationCode : dev/surefold/pelican/OAuthFlow {
-	public final fun getAuthorizationUrl ()Ljava/lang/String;
-	public final fun getRefreshUrl ()Ljava/lang/String;
-	public final fun getTokenUrl ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/OAuthFlow$ClientCredentials : dev/surefold/pelican/OAuthFlow {
-	public final fun getRefreshUrl ()Ljava/lang/String;
-	public final fun getTokenUrl ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/OAuthFlow$Implicit : dev/surefold/pelican/OAuthFlow {
-	public final fun getAuthorizationUrl ()Ljava/lang/String;
-	public final fun getRefreshUrl ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/OAuthFlow$Password : dev/surefold/pelican/OAuthFlow {
-	public final fun getRefreshUrl ()Ljava/lang/String;
-	public final fun getTokenUrl ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/OpenIdConnectScheme : dev/surefold/pelican/SecurityScheme {
-	public fun getDescription ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public final fun getOpenIdConnectUrl ()Ljava/lang/String;
-}
-
-public abstract interface class dev/surefold/pelican/OperationAdmission {
-	public abstract fun check (Ldev/surefold/pelican/AdmissionRequest;)Ldev/surefold/pelican/AdmissionDecision;
-}
-
-public abstract interface class dev/surefold/pelican/Outcome {
-}
-
-public final class dev/surefold/pelican/Outcome$Err : dev/surefold/pelican/Outcome {
-	public fun <init> (Ldev/surefold/pelican/ErrorOutput;Ljava/lang/Object;Ljava/util/List;)V
-	public synthetic fun <init> (Ldev/surefold/pelican/ErrorOutput;Ljava/lang/Object;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/surefold/pelican/ErrorOutput;
-	public final fun component2 ()Ljava/lang/Object;
-	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Ldev/surefold/pelican/ErrorOutput;Ljava/lang/Object;Ljava/util/List;)Ldev/surefold/pelican/Outcome$Err;
-	public static synthetic fun copy$default (Ldev/surefold/pelican/Outcome$Err;Ldev/surefold/pelican/ErrorOutput;Ljava/lang/Object;Ljava/util/List;ILjava/lang/Object;)Ldev/surefold/pelican/Outcome$Err;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun get (Ldev/surefold/pelican/ResponseHeader;)Ljava/lang/Object;
-	public final fun getDeclared ()Ldev/surefold/pelican/ErrorOutput;
-	public final fun getError ()Ljava/lang/Object;
-	public final fun getHeaders ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/Outcome$Ok : dev/surefold/pelican/Outcome {
-	public fun <init> (Ljava/lang/Object;Ldev/surefold/pelican/Output;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/Object;Ldev/surefold/pelican/Output;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/Object;
-	public final fun component2 ()Ldev/surefold/pelican/Output;
-	public final fun component3 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/Object;Ldev/surefold/pelican/Output;Ljava/util/List;)Ldev/surefold/pelican/Outcome$Ok;
-	public static synthetic fun copy$default (Ldev/surefold/pelican/Outcome$Ok;Ljava/lang/Object;Ldev/surefold/pelican/Output;Ljava/util/List;ILjava/lang/Object;)Ldev/surefold/pelican/Outcome$Ok;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun get (Ldev/surefold/pelican/ResponseHeader;)Ljava/lang/Object;
-	public final fun getDeclared ()Ldev/surefold/pelican/Output;
-	public final fun getHeaders ()Ljava/util/List;
-	public final fun getValue ()Ljava/lang/Object;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/surefold/pelican/OutcomesKt {
-	public static final field DEFAULT_DISCRIMINATOR Ljava/lang/String;
-	public static final fun err (Ldev/surefold/pelican/ErrorOutput;)Ljava/lang/Void;
-	public static final fun err (Ljava/lang/Object;)Ldev/surefold/pelican/Outcome;
-	public static final fun of (Ldev/surefold/pelican/ResponseHeader;Ljava/lang/Object;)Ldev/surefold/pelican/HeaderValue;
-	public static final fun ok (Ldev/surefold/pelican/Output;)Ljava/lang/Void;
-	public static final fun ok (Ljava/lang/Object;)Ldev/surefold/pelican/Outcome;
-	public static final fun or (Ldev/surefold/pelican/DeclaredResponses;Ldev/surefold/pelican/Output;)Ldev/surefold/pelican/DeclaredResponses;
-	public static final fun or (Ldev/surefold/pelican/Output;Ldev/surefold/pelican/Output;)Ldev/surefold/pelican/DeclaredResponses;
-	public static final fun or (Ldev/surefold/pelican/Output;[Ldev/surefold/pelican/Output;)Ldev/surefold/pelican/DeclaredResponses;
-	public static final fun orFail (Ldev/surefold/pelican/DeclaredResponses;Ldev/surefold/pelican/ErrorOutput;)Ldev/surefold/pelican/DeclaredResponses;
-	public static final fun orFail (Ldev/surefold/pelican/DeclaredResponses;[Ldev/surefold/pelican/ErrorOutput;)Ldev/surefold/pelican/DeclaredResponses;
+	public final fun getSeparator ()Lja…3158 tokens truncated…ErrorOutput;)Ldev/surefold/pelican/DeclaredResponses;
 	public static final fun orFail (Ldev/surefold/pelican/Output;Ldev/surefold/pelican/ErrorOutput;)Ldev/surefold/pelican/DeclaredResponses;
 	public static final fun orFail (Ldev/surefold/pelican/Output;[Ldev/surefold/pelican/ErrorOutput;)Ldev/surefold/pelican/DeclaredResponses;
 }
@@ -1936,6 +1703,31 @@ public final class dev/surefold/pelican/StoredResponse {
 	public final fun getHeaders ()Ljava/util/List;
 	public final fun getMediaType ()Ljava/lang/String;
 	public final fun getStatus ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class dev/surefold/pelican/StoreResult {
+}
+
+public final class dev/surefold/pelican/StoreResult$Available : dev/surefold/pelican/StoreResult {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Ldev/surefold/pelican/StoreResult$Available;
+	public static synthetic fun copy$default (Ldev/surefold/pelican/StoreResult$Available;Ljava/lang/Object;ILjava/lang/Object;)Ldev/surefold/pelican/StoreResult$Available;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/surefold/pelican/StoreResult$Unavailable : dev/surefold/pelican/StoreResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Ldev/surefold/pelican/StoreResult$Unavailable;
+	public static synthetic fun copy$default (Ldev/surefold/pelican/StoreResult$Unavailable;Ljava/lang/Throwable;ILjava/lang/Object;)Ldev/surefold/pelican/StoreResult$Unavailable;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCause ()Ljava/lang/Throwable;
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
